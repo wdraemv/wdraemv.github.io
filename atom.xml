@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-04T08:22:49.577Z</updated>
+  <updated>2021-05-04T08:27:59.353Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>攻防世界re2</title>
+    <link href="http://example.com/2021/05/04/re2/"/>
+    <id>http://example.com/2021/05/04/re2/</id>
+    <published>2021-05-04T08:21:38.000Z</published>
+    <updated>2021-05-04T08:27:59.353Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>双击点开，让我输入flag</p><p><img src="https://winny.work/wp-content/uploads/2019/08/1565360175669.png" alt="1565360175669"></p><p>IDA直接看</p><p><img src="https://wx3.sinaimg.cn/mw1024/007juUiNly1gq6gxuh031j30nd0i80tq.jpg" alt="img"></p><p>F5</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gxuge37j30iq0gaaak.jpg" alt="img"></p><p>看到 <strong>strcmp()</strong> 函数，输入的是v9，和v5比较，所以数据就应该在v5里面，再看第10行，把<strong>xmmword_413E34</strong>的值赋给v5，所以双击<strong>xmmword_413E34</strong>看它的数据。把<strong>qword_413E44</strong>和<strong>xmmword_413E34</strong>的数据拼起来</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gxujeoxj30p80itmyk.jpg" alt="img"></p><p>按A直接得到flag</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;re1&quot;&gt;&lt;a href=&quot;#re1&quot; class=&quot;headerlink&quot; title=&quot;re1&quot;&gt;&lt;/a&gt;re1&lt;/h2&gt;&lt;p&gt;双击点开，让我输入flag&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://winny.work/wp-content/uploa</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>攻防世界re1</title>
@@ -399,26 +420,6 @@
 &lt;p&gt;　　rand()：随机函数&lt;/p&gt;
 &lt;p&gt;　　floor()：取整函数&lt;/p&gt;
 &lt;p&gt;　　co</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>sql-Less3，4</title>
-    <link href="http://example.com/2020/11/20/sql-3/"/>
-    <id>http://example.com/2020/11/20/sql-3/</id>
-    <published>2020-11-20T12:57:41.000Z</published>
-    <updated>2020-11-28T13:36:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h1><h2 id="注入点闭合的问题"><a href="#注入点闭合的问题" class="headerlink" title="注入点闭合的问题"></a>注入点闭合的问题</h2><p>首先先讲讲闭合符的问题</p><p>一般注入点闭合无非是 ‘ , “ , ‘) , “)等各种组合(逗号是分隔符)</p><p>一般的代码：$id=$_GET[‘id’]; </p><p>$sql=”SELECT * FROM users WHERE id=’$id’ LIMIT 0,1”; </p><p>就是这里，对id进行了修饰，用’（单引号）把id括了起来。所以我们构造语句的时候，一是要把我们构造的语句‘逃逸’出来，二是要把结构进行补全或者适当的注释。</p><p>注释可以用–+;– -;#把后面的’或者多余的修饰符注释掉</p><p><strong>less1-</strong>-根据注入位置数据类型可将sql注入分为：数字型和字符型。用 ?id=1 和?id=1’ 探测是否存在SQL注入。发现前者返回正常，后者会出现mysql语法错误。<br><strong>错误:</strong> ’ ‘1’’ LIMIT 0.1 ’<br><strong>SQL:</strong> select login_name,password from admin where id=‘id’ limit 0,1;</p><p><strong>less2</strong>–<br><strong>错误:</strong> ’ ’ LIMIT 0,1 ’<br><strong>SQL:</strong> select login_name ,password from admin where id=id limit 0,1;</p><p>less3–<br><strong>错误 ：</strong> ’ ‘1’’) LIMIT 0,1 ’<br><strong>SQL:</strong> select login_name,password from admin where id=(‘id’) limit 0,1;<br><strong>构造闭合</strong>：?id=1’) –+ 或者 ?id=1’) –%20 //–+表示注释后面的内容</p><p>less-4– 双引号绕过：<br><strong>错误：</strong>‘ “1\”) LIMIT 0,1 ’ 或者 ’ “ 1””) LIMIT 0,1 ’ //这里的\对 “ 进行了转义. //这里 “ ” 使里面的单引号转化为 1<br><strong>SQL:</strong> select login_name,password from admin where id=(“ID”) limit 0,1<br><strong>构造闭合：</strong> ?id=1”) –+ 或者 ?id=1”) –%20</p><p>正片开始</p><p>输入?id=1’</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/ruAMsa53pVQWN7FLK88i5jZ4wNsSTum2TzpklTuDTuNTqDdv.qsP8FpIhcFuZAwyuuScn1p1rQ1.NdrVkosLVgrnk3F6OccCflh4yiIDuTs!/b&bo=GQZlAQAAAAADB1k!&rf=viewer_4" alt="img"></p><p>出现报错，可知加‘）注意是’ 不是 ‘</p><p>接下来就是和前面的关一样了。</p><h1 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h1><p>和第三关一样</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/ruAMsa53pVQWN7FLK88i5iK1LfZHtBibppwAzKxkanJ2OgeS8d8.sQ5Ku.63SDWJ2204CbPYvIDdmidI4KrgaTI6WU8l2tyIFtvzT.Z*mP0!/b&bo=BAbWAQAAAAADB*c!&rf=viewer_4" alt="img"></p><p>知道要加“）</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcebXzZr*awVGjLYjCtYYYswMysyppEG4IxMmoIVJjeEb9N3TCw8cukh6ZVDzzfI4xOdLDk9PAOookEiKGIfe4Hc!/b&bo=jgWoAQAAAAADJyA!&rf=viewer_4" alt="img"></p><p>其他就和上面一样</p><p>ye</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Less-3&quot;&gt;&lt;a href=&quot;#Less-3&quot; class=&quot;headerlink&quot; title=&quot;Less-3&quot;&gt;&lt;/a&gt;Less-3&lt;/h1&gt;&lt;h2 id=&quot;注入点闭合的问题&quot;&gt;&lt;a href=&quot;#注入点闭合的问题&quot; class=&quot;headerlink&quot; </summary>
       
     
     
