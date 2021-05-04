@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-04T08:27:59.353Z</updated>
+  <updated>2021-05-04T09:21:51.492Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2021/05/04/re2/"/>
     <id>http://example.com/2021/05/04/re2/</id>
     <published>2021-05-04T08:21:38.000Z</published>
-    <updated>2021-05-04T08:27:59.353Z</updated>
+    <updated>2021-05-04T09:21:51.492Z</updated>
     
     <content type="html"><![CDATA[<h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>双击点开，让我输入flag</p><p><img src="https://winny.work/wp-content/uploads/2019/08/1565360175669.png" alt="1565360175669"></p><p>IDA直接看</p><p><img src="https://wx3.sinaimg.cn/mw1024/007juUiNly1gq6gxuh031j30nd0i80tq.jpg" alt="img"></p><p>F5</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gxuge37j30iq0gaaak.jpg" alt="img"></p><p>看到 <strong>strcmp()</strong> 函数，输入的是v9，和v5比较，所以数据就应该在v5里面，再看第10行，把<strong>xmmword_413E34</strong>的值赋给v5，所以双击<strong>xmmword_413E34</strong>看它的数据。把<strong>qword_413E44</strong>和<strong>xmmword_413E34</strong>的数据拼起来</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gxujeoxj30p80itmyk.jpg" alt="img"></p><p>按A直接得到flag</p>]]></content>
     
