@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-06-01T14:09:54.981Z</updated>
+  <updated>2021-06-05T15:35:27.253Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2021 DASCTF X BUUOJ 五月大联动</title>
+    <link href="http://example.com/2021/06/05/5yuedald/"/>
+    <id>http://example.com/2021/06/05/5yuedald/</id>
+    <published>2021-06-05T14:24:11.000Z</published>
+    <updated>2021-06-05T15:35:27.253Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="PaperPlease"><a href="#PaperPlease" class="headerlink" title="PaperPlease"></a>PaperPlease</h2><p>先查壳，发现没有，用IDA打开，比较简单，直接看main函数</p><p><img src="/2021/06/05/5yuedald/1.PNG" alt="1"></p><p>先比较了一下前面几位输入的是不是和DASCTF{ }一样，然后调用了一下这个巨长的函数，打开看一下</p><p><img src="/2021/06/05/5yuedald/2.PNG" alt="2"></p><p>可以看出是和一段数据进行了异或操作,off_4010点进去看看</p><p><img src="/2021/06/05/5yuedald/3.PNG" alt="3"></p><p>可以看到一串数据，思路清晰了，直接解</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">r = <span class="string">&quot;5c715207e3abed7dfb7c8ea9c82d0e29&quot;</span></span><br><span class="line"></span><br><span class="line">t = [<span class="number">0x56</span>,<span class="number">0x5</span>,<span class="number">0x53</span>,<span class="number">0x52</span>,<span class="number">0x4</span>,<span class="number">0x3</span>,<span class="number">0x53</span>,<span class="number">0x54</span>,<span class="number">0x4</span>,<span class="number">0x0B</span>,<span class="number">0x53</span>,<span class="number">0x51</span>,<span class="number">0x6</span>,<span class="number">0x6</span>,<span class="number">0x0F</span>,<span class="number">0x55</span>,<span class="number">0x5</span>,<span class="number">0x5B</span>,<span class="number">0x3</span>,<span class="number">0x56</span>,<span class="number">0x0E</span>,<span class="number">0x7</span>,<span class="number">0x57</span>,<span class="number">0x0E</span>,<span class="number">0x1</span>,<span class="number">0x0D</span>,<span class="number">0x56</span>,<span class="number">0x0</span>,<span class="number">0x4</span>,<span class="number">0x6</span>,<span class="number">0x0A</span>,<span class="number">0x5D</span>]</span><br><span class="line"></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(r)):</span><br><span class="line">      flag += <span class="built_in">chr</span>(<span class="built_in">ord</span>(r[i])^t[i])</span><br><span class="line"></span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure><p><img src="/2021/06/05/5yuedald/4.PNG" alt="4"></p><p>最后在加上DASCTF{ }就可以了</p><h2 id="end"><a href="#end" class="headerlink" title="end"></a>end</h2><p>该程序逻辑其实也十分清晰，就是一道迷宫题，如下图所示，2代表前进七步，8代表后退七步，6代表前进一步，4代表后退一步。每前进一步就和amp数组里的值进行比较，为1则继续前进，不为1则退出，直到走到”#”的位置</p><p><img src="/2021/06/05/5yuedald/5.PNG" alt="5"></p><p><img src="/2021/06/05/5yuedald/6.PNG" alt="6"></p><p>找到了数据才顺藤摸瓜找到函数</p><p>看着这个数出来的是错的，看了大佬讲的才知道32位的程序每一步是4个字节，而IDAHEX显示的是单字节，要调整成四字节的才可以看出，把原来的数据类型改成unsigned,8列，四字节</p><p><img src="/2021/06/05/5yuedald/43.PNG" alt="43"></p><p>计算一下就可以推导出结果</p><p><strong>2622668662224422666</strong><img src="/2021/06/05/5yuedald/67.PNG" alt="67"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;PaperPlease&quot;&gt;&lt;a href=&quot;#PaperPlease&quot; class=&quot;headerlink&quot; title=&quot;PaperPlease&quot;&gt;&lt;/a&gt;PaperPlease&lt;/h2&gt;&lt;p&gt;先查壳，发现没有，用IDA打开，比较简单，直接看main函数&lt;/p&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>ESP定理</title>
@@ -402,26 +422,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;堆叠注入定义&quot;&gt;&lt;a href=&quot;#堆叠注入定义&quot; class=&quot;headerlink&quot; title=&quot;堆叠注入定义&quot;&gt;&lt;/a&gt;堆叠注入定义&lt;/h2&gt;&lt;p&gt;   Stacked injections(堆叠注入)从名词的含义就可以看到应该是一堆 sql 语句(多条)</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>sqli-labs-32、33</title>
-    <link href="http://example.com/2021/02/08/sqli-labs-32/"/>
-    <id>http://example.com/2021/02/08/sqli-labs-32/</id>
-    <published>2021-02-08T08:07:38.000Z</published>
-    <updated>2021-05-24T15:44:41.674Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>mysql 在使用 GBK 编码的时候，会认为两个字符为一个汉字，例如%aa%5c 就是一个汉字（前一个 ascii 码大于 128 才能到汉字的范围）。我们在过滤 ’ 的时候，往往利用的思路是将‘转换为\’（转换的函数或者思路会在每一关遇到的时候介绍）。</p><p>PHP 自带一些转义特殊字符的函数，如addslashes()，mysql_real_escape_string()，mysql_escape_string()等，这些函数可用来防止 SQL 注入。</p><p>如id=1’or’1’=’1，单引号本用来闭合语句，这些函数会自动转义这些闭合的单引号，在这些单引号前面加上转义符\，变为1&#39;or&#39;1&#39;=&#39;1，如此在 SQL 查询中是一个普通的字符串，不能进行注入。</p><p>而网站在过滤’的时候，通常的思路就是将’转换为&#39;,因此我们在此想办法将’前面添加的\去掉，一般有两种思路：<br>%bb吃掉\</p><p>如果程序的默认字符集是GBK等宽字节字符集，就有可能产生宽字节注入，绕过上述过滤。</p><p>若在 PHP 中使用mysql_query(“set names gbk”)将默认字符集设为GBK，而使用addslashes()转义用户输入，这时如果用户输入%bb%27，则addslashes()会在%27前面加上一个%5c字符，即转义字符\。</p><p>而 MySQL 在使用GBK编码时，会认为两个字符为一个汉字，%bb%5c是一个宽字符（前一个 ASCII 码大于 128 才能到汉字的范围），也就是籠，也就是说%bb%5c%27=籠’，这样单引号就未被转义能闭合语句，从而产生 SQL 注入。%bb并不是唯一一个可以产生宽字节注入的字符，理论上%81-%FE均可。</p><p>过滤&#39;中的<br>构造%bb%5c%5c%27，addslashes()会在两个%5c和%27前都加上\即%5c，变为%bb %5c%5c %5c%5c %5c%27，但宽字符集认为%bb%5c是一个字符即籠，则变为%bb%5c %5c%5c %5c%5c %27即\&#39;，四个\正好转义为两个\，即’未被转义。这也是 bypass 的一种方法。</p><h1 id="Less-32"><a href="#Less-32" class="headerlink" title="Less-32"></a>Less-32</h1><h3 id="GET-绕过自定义筛选器，将斜杠添加到危险字符。即基于错误-GET-单引号-字符型-转义引号反斜杠-宽字节注入"><a href="#GET-绕过自定义筛选器，将斜杠添加到危险字符。即基于错误-GET-单引号-字符型-转义引号反斜杠-宽字节注入" class="headerlink" title="GET-绕过自定义筛选器，将斜杠添加到危险字符。即基于错误_GET_单引号_字符型_转义引号反斜杠_宽字节注入"></a>GET-绕过自定义筛选器，将斜杠添加到危险字符。即基于错误_GET_单引号_字符型_转义引号反斜杠_宽字节注入</h3><p><img src="https://img-blog.csdnimg.cn/20200501080015925.png" alt="img"></p><p><img src="https://img-blog.csdnimg.cn/20200501075522513.png" alt="img"></p><p><img src="https://img-blog.csdnimg.cn/20200501075618853.png" alt="img"></p><p><img src="https://img-blog.csdnimg.cn/20200501075638783.png" alt="img"></p><p><img src="https://img-blog.csdnimg.cn/20200501075656374.png" alt="img"></p><p>可以看到这个函数是个过滤\、’、”的函数，分别在前面加上\</p><p>注意：</p><p>GET型的方式我们是以url形式提交的，因此数据会通过url编码,其实url编码就是一个字符ascii码的十六进制。不过稍微有些变动，需要在前面加上“%”。比如“\”，它的ascii码是92，92的十六进制是5c，所以“\”的url编码就是%5c。那么汉字的url编码呢？很简单，看例子：“胡”的ascii码是 -17670，十六进制是BAFA，url编码是“%BA%FA”。 （汉字转ASCII码：默认情况下，是使用扩展ASCII，第一个字节为负数时（或理解为127以上）是识别，加后一个字节共两个字节。想了解更多自行查阅资料）</p><p>那么我们输入1%df%27，被转义为1�&#39;,经过url编码后为%31%df%5c%27,然后提交给数据库，在使用GBK编码的数据库会进行解码，于是变成了1瀿’        df5c就是一个宽字符，我不知道是啥汉字就用了’瀿’来代替，再说一下这个�是乱码，原因是两个不同字符集编码转换问题导致的（比如:GBK和Unicode））</p><p>?id=1%df%27–+</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcZkt6hzTztbUhAC3xFmT.zNQp0YP8Nxy8cAiusOdp8WW49srmsN3tAWdbUMFk4VgQ7TMDLtb.MbQjQlNcsUsAB8!/b&bo=9AbvAgAAAAADNw0!&rf=viewer_4" alt="img"></p><p>已经确定了单引号闭合且宽字节注入可以绕过，剩下的就是正常的注入，无其他过滤条件。<br>因未过滤注释，所以只有开头的单引号需要宽字节注入。<br>暴库：</p><p>?id=-1%df%27 union select 1,2,database()–+</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcUm9JVpcsmJygBODi9CK6eDjBXo5D6Fur4YgJJOrbu8c9P7l7quE2Y2qKK*htqLES.sqzj4npTHkfEIdNOA926I!/b&bo=3gbiAgAAAAADNyo!&rf=viewer_4" alt="img"></p><p>暴表：</p><p>?id=-1%df%27 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=database()–+</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcfejKJcW2qsMxOJFgZPRgNGO3R7fAvaCjPHrQFsznzYBicl1hwxxtuIaP4Ua7RnD21P1Ctq8P*34OV2vO5CD4go!/b&bo=awfhAgAAAAADN50!&rf=viewer_4" alt="img"></p><p>或者:(将security转换为16进制)<br>?id=-1%df%27 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=0x7365637572697479–+</p><p>暴字段：</p><p>user转换为16进制：0x7573657273</p><p>?id=-1%df%27 union select 1,group_concat(column_name),3 from information_schema.columns where table_name=0x7573657273 and table_schema=0x7365637572697479–+</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcUm9JVpcsmJygBODi9CK6eAaZ.YN63J.Wud6dkrkUuYioPdn*d8ndJhbPoBy*WdDHnfOH1l5ht7zNdqEzCzZiCY!/b&bo=gAcDAwAAAAADN5U!&rf=viewer_4" alt="img"></p><p>暴数据：</p><p>?id=-1%df%27 union select 1,group_concat(username,0x7e,password),3 from security.users–+</p><p><img src="http://m.qpic.cn/psc?/V53QcDQN3M0Z4223G6is1vw7KQ0WDRYf/45NBuzDIW489QBoVep5mcUm9JVpcsmJygBODi9CK6eCkbspPXkQT5prx81Gw250GbppJhUxbJzVe1BanGyoPYLX9Yw.Y5bD.n92Ix5cnCnM!/b&bo=fwf7AgAAAAADN5M!&rf=viewer_4" alt="img"></p><h1 id="Less-33"><a href="#Less-33" class="headerlink" title="Less-33"></a>Less-33</h1><h3 id="GET型-绕过AddSlashes-函数"><a href="#GET型-绕过AddSlashes-函数" class="headerlink" title="GET型-绕过AddSlashes()函数"></a>GET型-绕过AddSlashes()函数</h3><p>本关直接使用了 PHP 的addslashes()函数，<br><strong>addslashes()与stripslashes()函数</strong><br><strong>addslashes(string)函数返回在预定义字符之前添加反斜杠\的字符串</strong>：<br>单引号 ‘<br>双引号 “<br>反斜杠 <br>空字符 NULL<br><strong>该函数可用于为存储在数据库中的字符串以及数据库查询语句准备字符串。</strong><br>注意：默认地，PHP对所有的GET、POST和COOKIE数据自动运行addslashes()。所以不应对已转义过的字符串使用addslashes()，因为这样会导致双层转义。遇到这种情况时可以使用函数get_magic_quotes_gpc()进行检测。<br>stripslashes(string)函数删除由addslashes()函数添加的反斜杠。</p><h3 id="判断和注入过程同-Less-32-完全相同。"><a href="#判断和注入过程同-Less-32-完全相同。" class="headerlink" title="判断和注入过程同 Less 32 完全相同。"></a>判断和注入过程同 Less 32 完全相同。</h3>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;宽字节注入&quot;&gt;&lt;a href=&quot;#宽字节注入&quot; class=&quot;headerlink&quot; title=&quot;宽字节注入&quot;&gt;&lt;/a&gt;宽字节注入&lt;/h1&gt;&lt;h2 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原</summary>
       
     
     
