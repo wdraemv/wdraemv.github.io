@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2021/07/18/BUU-reverse/</loc>
+    <loc>http://example.com/2021/07/16/%E5%88%86%E6%9E%90crackme1/</loc>
     
-    <lastmod>2021-07-18</lastmod>
+    <lastmod>2021-07-19</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2021/07/16/%E5%88%86%E6%9E%90crackme1/</loc>
+    <loc>http://example.com/2021/07/18/BUU-reverse/</loc>
     
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     
   </url>
   
@@ -361,7 +361,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2021-07-18</lastmod>
+    <lastmod>2021-07-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
