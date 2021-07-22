@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>分析abexcrackme2 | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="1.abex‘crackme2一.abex‘crackme2打开程序  要求我们输入名字与Serial，先随便输一个试试,点击check按钮，弹出了一个Wrong serial!的窗口，开始调试。  二.VB专用引擎VB文件使用名为MSVBVM60.dll ( Microsoft Visual Basic Virtual Machine 6.0 )的VB专用引擎(也称为The Thunder Ru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分析abexcrackme2">
+<meta property="og:url" content="http://example.com/2021/07/20/crackme2/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="1.abex‘crackme2一.abex‘crackme2打开程序  要求我们输入名字与Serial，先随便输一个试试,点击check按钮，弹出了一个Wrong serial!的窗口，开始调试。  二.VB专用引擎VB文件使用名为MSVBVM60.dll ( Microsoft Visual Basic Virtual Machine 6.0 )的VB专用引擎(也称为The Thunder Ru">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/2.png">
+<meta property="article:published_time" content="2021-07-20T08:11:37.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:17:57.245Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/07/20/crackme2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.3.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-07-22 20:17:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://q2.qlogo.cn/headimg_dl?dst_uin=1034630181&amp;spec=100" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">50</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-abex%E2%80%98crackme2"><span class="toc-number">1.</span> <span class="toc-text">1.abex‘crackme2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-abex%E2%80%98crackme2"><span class="toc-number">2.</span> <span class="toc-text">一.abex‘crackme2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-VB%E4%B8%93%E7%94%A8%E5%BC%95%E6%93%8E"><span class="toc-number">3.</span> <span class="toc-text">二.VB专用引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E5%BC%80%E5%A7%8B%E8%B0%83%E8%AF%95"><span class="toc-number">4.</span> <span class="toc-text">三.开始调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A3%80%E7%B4%A2%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">4.1.</span> <span class="toc-text">1.检索字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.</span> <span class="toc-text">2.查找字符串地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%94%9F%E6%88%90Serial%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">3.生成Serial的算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.1.</span> <span class="toc-text">加密方法</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/2.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">分析abexcrackme2</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-07-20T08:11:37.000Z" title="Created 2021-07-20 16:11:37">2021-07-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-07-22T12:17:57.245Z" title="Updated 2021-07-22 20:17:57">2021-07-22</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="1-abex‘crackme2"><a href="#1-abex‘crackme2" class="headerlink" title="1.abex‘crackme2"></a>1.abex‘crackme2</h1><h1 id="一-abex‘crackme2"><a href="#一-abex‘crackme2" class="headerlink" title="一.abex‘crackme2"></a>一.abex‘crackme2</h1><p>打开程序</p>
+<p><img src="/2021/07/20/crackme2/1.PNG" alt="1"></p>
+<p>要求我们输入名字与Serial，先随便输一个试试,点击check按钮，弹出了一个Wrong serial!的窗口，开始调试。</p>
+<p><img src="/2021/07/20/crackme2/2.PNG" alt="2"></p>
+<h1 id="二-VB专用引擎"><a href="#二-VB专用引擎" class="headerlink" title="二.VB专用引擎"></a>二.VB专用引擎</h1><p>VB文件使用名为MSVBVM60.dll ( Microsoft Visual Basic Virtual Machine 6.0 )的VB专用引擎(也称为The Thunder Runtime Engine )。<br>举个使用VB引擎的例子，显示消息框时，VB代码中要调用MsgBox)函数。其实，VB编辑器真正调用的是MSVBVM60.dll里的rtcMsgBox()函数，在该函数内部通过调用user32.dll里的MessageBoxW()函数(Win32 API）来工作（也可以在VB代码中直接调用user32.dll里的MessageBoxWO).</p>
+<h1 id="三-开始调试"><a href="#三-开始调试" class="headerlink" title="三.开始调试"></a>三.开始调试</h1><p>运行OllyDbg,查看反汇编代码。</p>
+<p><img src="/2021/07/20/crackme2/3.PNG" alt="3"></p>
+<p>执行程序后，在EP代码中首先要做的是调用VB引擎的主函数（ThunRTMain() )。<br>EP的地址为401238。401238地址处的PUSH 401E14命令用来把RT_MainStruct结构体的地址( 401E14)压入栈。然后40123D地址处的CALL 00401232命令调用401232地址处的JMP DWORDPTR DS:[4010A0]指令。该JMP指令会跳转至VB引擎的主函数ThunRTMain()（前面压入栈的401E14的值作为ThunRTMain()的参数)。</p>
+<h2 id="1-检索字符串"><a href="#1-检索字符串" class="headerlink" title="1.检索字符串"></a>1.检索字符串</h2><p><img src="/2021/07/20/crackme2/5.PNG" alt="5"></p>
+<p>消息框的标题(“Wrong serial!”)、内容(“Nope，this serial is wrong!”)，还有实际调用消息框函数的代码(4034A6)都显示出来了。<br>从编程的观点来看，使用某种算法生成序列号，通过比较用户输入的序列号与字符串，代码分为TRUE(序列号相同）与FALSE(序列号不同)两大部分。换言之，上述代码的前后存在字符串比较代码,且序列号正确时程序代码会调用消息框输出成功消息.</p>
+<p><img src="/2021/07/20/crackme2/6.PNG" alt="6"></p>
+<p>调用403329地址的_vbaVarTstEq()函数，比较(TEST命令）返回值(AX)后，由403332地址的条件转移指令（JE指令）决定执行“真”代码还是“假”代码。</p>
+<h2 id="2-查找字符串地址"><a href="#2-查找字符串地址" class="headerlink" title="2.查找字符串地址"></a>2.查找字符串地址</h2><p>调至403329处</p>
+<p><img src="/2021/07/20/crackme2/7.PNG" alt="7"></p>
+<p>有两个push，这时候我们查看栈窗口</p>
+<p><img src="/2021/07/20/crackme2/8.PNG" alt="8"></p>
+<p>可以看到地址0019F298，0019F288这两处。右键数据段查找</p>
+<p><img src="/2021/07/20/crackme2/9.PNG" alt="9"></p>
+<p>CCD8CAC8应该就是加密过的名字，sssss就是我们输入的serial，我们再用CCD8CAC8作为serial输入</p>
+<p><img src="/2021/07/20/crackme2/11.PNG" alt="11"></p>
+<h2 id="3-生成Serial的算法"><a href="#3-生成Serial的算法" class="headerlink" title="3.生成Serial的算法"></a>3.生成Serial的算法</h2><p>很显然,条件转移代码属于某个函数。该函数可能就是Check按钮的事件处理程序。原因在于选择Check按钮后，该函数会被调用执行，且含有用户代码来弹出成功/失败消息框。<br>最好倒着向上一点点地查找函数开始部分。向上拖动滚动条即可见到图8-14所示的代码。仔细看一下00402EDO地址处的命令。</p>
+<p><img src="/2021/07/20/crackme2/12.PNG" alt="12"></p>
+<p>上述代码是典型的栈帧代码，开始执行函数就会形成栈帧。由此得知该位置就是函数开始部分，即Check按钮的事件处理程序。</p>
+<p>我们预测到程序使用VB引擎的API获取用户输入的字符串，下面以CALL指令为主进行调试(请注意观察此时传递给API的参数及返回值)。开始调试后，遇到第四条CALL指令，如下所示。</p>
+<p><img src="/2021/07/20/crackme2/13.PNG" alt="13"></p>
+<p>查看00402F8E地址处的代码可以看到，函数的局部对象SS:[EBP-88]地址传递(PUSH)给了函数的参数。</p>
+<h3 id="加密方法"><a href="#加密方法" class="headerlink" title="加密方法"></a>加密方法</h3><p>(1)从给定的Name字符串前端逐一读取字符（共4次)。</p>
+<p>(2)将字符转换为数字(ASCII代码)。</p>
+<p>(3)向变换后的数字加64。</p>
+<p>(4)再次将数字转换为字符。</p>
+<p>(5)连接变换后的字符。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/07/20/crackme2/">http://example.com/2021/07/20/crackme2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/07/18/BUU-reverse/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/13.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">BUU-reverse</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

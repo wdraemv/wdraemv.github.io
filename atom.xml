@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-07-18T13:02:43.916Z</updated>
+  <updated>2021-07-22T12:17:57.245Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分析abexcrackme2</title>
+    <link href="http://example.com/2021/07/20/crackme2/"/>
+    <id>http://example.com/2021/07/20/crackme2/</id>
+    <published>2021-07-20T08:11:37.000Z</published>
+    <updated>2021-07-22T12:17:57.245Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-abex‘crackme2"><a href="#1-abex‘crackme2" class="headerlink" title="1.abex‘crackme2"></a>1.abex‘crackme2</h1><h1 id="一-abex‘crackme2"><a href="#一-abex‘crackme2" class="headerlink" title="一.abex‘crackme2"></a>一.abex‘crackme2</h1><p>打开程序</p><p><img src="/2021/07/20/crackme2/1.PNG" alt="1"></p><p>要求我们输入名字与Serial，先随便输一个试试,点击check按钮，弹出了一个Wrong serial!的窗口，开始调试。</p><p><img src="/2021/07/20/crackme2/2.PNG" alt="2"></p><h1 id="二-VB专用引擎"><a href="#二-VB专用引擎" class="headerlink" title="二.VB专用引擎"></a>二.VB专用引擎</h1><p>VB文件使用名为MSVBVM60.dll ( Microsoft Visual Basic Virtual Machine 6.0 )的VB专用引擎(也称为The Thunder Runtime Engine )。<br>举个使用VB引擎的例子，显示消息框时，VB代码中要调用MsgBox)函数。其实，VB编辑器真正调用的是MSVBVM60.dll里的rtcMsgBox()函数，在该函数内部通过调用user32.dll里的MessageBoxW()函数(Win32 API）来工作（也可以在VB代码中直接调用user32.dll里的MessageBoxWO).</p><h1 id="三-开始调试"><a href="#三-开始调试" class="headerlink" title="三.开始调试"></a>三.开始调试</h1><p>运行OllyDbg,查看反汇编代码。</p><p><img src="/2021/07/20/crackme2/3.PNG" alt="3"></p><p>执行程序后，在EP代码中首先要做的是调用VB引擎的主函数（ThunRTMain() )。<br>EP的地址为401238。401238地址处的PUSH 401E14命令用来把RT_MainStruct结构体的地址( 401E14)压入栈。然后40123D地址处的CALL 00401232命令调用401232地址处的JMP DWORDPTR DS:[4010A0]指令。该JMP指令会跳转至VB引擎的主函数ThunRTMain()（前面压入栈的401E14的值作为ThunRTMain()的参数)。</p><h2 id="1-检索字符串"><a href="#1-检索字符串" class="headerlink" title="1.检索字符串"></a>1.检索字符串</h2><p><img src="/2021/07/20/crackme2/5.PNG" alt="5"></p><p>消息框的标题(“Wrong serial!”)、内容(“Nope，this serial is wrong!”)，还有实际调用消息框函数的代码(4034A6)都显示出来了。<br>从编程的观点来看，使用某种算法生成序列号，通过比较用户输入的序列号与字符串，代码分为TRUE(序列号相同）与FALSE(序列号不同)两大部分。换言之，上述代码的前后存在字符串比较代码,且序列号正确时程序代码会调用消息框输出成功消息.</p><p><img src="/2021/07/20/crackme2/6.PNG" alt="6"></p><p>调用403329地址的_vbaVarTstEq()函数，比较(TEST命令）返回值(AX)后，由403332地址的条件转移指令（JE指令）决定执行“真”代码还是“假”代码。</p><h2 id="2-查找字符串地址"><a href="#2-查找字符串地址" class="headerlink" title="2.查找字符串地址"></a>2.查找字符串地址</h2><p>调至403329处</p><p><img src="/2021/07/20/crackme2/7.PNG" alt="7"></p><p>有两个push，这时候我们查看栈窗口</p><p><img src="/2021/07/20/crackme2/8.PNG" alt="8"></p><p>可以看到地址0019F298，0019F288这两处。右键数据段查找</p><p><img src="/2021/07/20/crackme2/9.PNG" alt="9"></p><p>CCD8CAC8应该就是加密过的名字，sssss就是我们输入的serial，我们再用CCD8CAC8作为serial输入</p><p><img src="/2021/07/20/crackme2/11.PNG" alt="11"></p><h2 id="3-生成Serial的算法"><a href="#3-生成Serial的算法" class="headerlink" title="3.生成Serial的算法"></a>3.生成Serial的算法</h2><p>很显然,条件转移代码属于某个函数。该函数可能就是Check按钮的事件处理程序。原因在于选择Check按钮后，该函数会被调用执行，且含有用户代码来弹出成功/失败消息框。<br>最好倒着向上一点点地查找函数开始部分。向上拖动滚动条即可见到图8-14所示的代码。仔细看一下00402EDO地址处的命令。</p><p><img src="/2021/07/20/crackme2/12.PNG" alt="12"></p><p>上述代码是典型的栈帧代码，开始执行函数就会形成栈帧。由此得知该位置就是函数开始部分，即Check按钮的事件处理程序。</p><p>我们预测到程序使用VB引擎的API获取用户输入的字符串，下面以CALL指令为主进行调试(请注意观察此时传递给API的参数及返回值)。开始调试后，遇到第四条CALL指令，如下所示。</p><p><img src="/2021/07/20/crackme2/13.PNG" alt="13"></p><p>查看00402F8E地址处的代码可以看到，函数的局部对象SS:[EBP-88]地址传递(PUSH)给了函数的参数。</p><h3 id="加密方法"><a href="#加密方法" class="headerlink" title="加密方法"></a>加密方法</h3><p>(1)从给定的Name字符串前端逐一读取字符（共4次)。</p><p>(2)将字符转换为数字(ASCII代码)。</p><p>(3)向变换后的数字加64。</p><p>(4)再次将数字转换为字符。</p><p>(5)连接变换后的字符。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1-abex‘crackme2&quot;&gt;&lt;a href=&quot;#1-abex‘crackme2&quot; class=&quot;headerlink&quot; title=&quot;1.abex‘crackme2&quot;&gt;&lt;/a&gt;1.abex‘crackme2&lt;/h1&gt;&lt;h1 id=&quot;一-abex‘crackm</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>BUU-reverse</title>
@@ -397,26 +417,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;PE文件&quot;&gt;&lt;a href=&quot;#PE文件&quot; class=&quot;headerlink&quot; title=&quot;PE文件&quot;&gt;&lt;/a&gt;PE文件&lt;/h1&gt;&lt;p&gt;PE文件的全称是Portable Executable，意为可移植的可执行的文件，常见的EXE、DLL、OCX、SYS、CO</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>攻防世界misc-3</title>
-    <link href="http://example.com/2021/04/19/drf/"/>
-    <id>http://example.com/2021/04/19/drf/</id>
-    <published>2021-04-19T13:05:16.000Z</published>
-    <updated>2021-05-24T15:43:15.720Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="base64÷4"><a href="#base64÷4" class="headerlink" title="base64÷4"></a>base64÷4</h2><p><img src="/2021/04/19/drf/007juUiNly1gppcu2jwr5j30qd011jr7.jpg" alt="img"></p><p>得到一串码 直接丢进cy</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2nzhmj30na0e5glo.jpg" alt="img"></p><h2 id="something-in-image"><a href="#something-in-image" class="headerlink" title="something_in_image"></a>something_in_image</h2><p>直接010打开得到flag</p><h2 id="wireshark-1"><a href="#wireshark-1" class="headerlink" title="wireshark-1"></a>wireshark-1</h2><p>下下来一个装有流量包的zip文件  wireshark打开流量包</p><p>搜索flag<img src="/2021/04/19/drf/007juUiNly1gppcu2id30j309l04sdfs.jpg" alt="img"></p><p>得到</p><h2 id="pure-color"><a href="#pure-color" class="headerlink" title="pure_color"></a>pure_color</h2><p>得到一个全空白的图片</p><p>用stegsolve看看</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2omznj30st09u3yo.jpg" alt="img"></p><p>得到flag</p><h2 id="Aesop-secret"><a href="#Aesop-secret" class="headerlink" title="Aesop_secret"></a>Aesop_secret</h2><p>下下来一个gif ps打开得到<code>ISCC</code>，尝试下不是flag</p><p>010打开</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2rq7hj307907w3yk.jpg" alt="img"></p><p>在最后得到一段字段</p><p>AES解密 密码是ISCC</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2ormbj30uj0bk0tj.jpg" alt="img"></p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2wwaoj30sf0d1wf4.jpg" alt="img"></p><h2 id="a-good-idea"><a href="#a-good-idea" class="headerlink" title="a_good_idea"></a>a_good_idea</h2><p>用010打开，看下来发现有点长，一个有两个文件，在text里面看到PK，这不是有zip,直接把前面的都删掉，得到一个zip</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2wao8j30ks0er75x.jpg" alt="img"></p><p><img src="/2021/04/19/drf/007juUiNly1gppcu3ab23j30wv0it77w.jpg" alt="img"></p><p>还有两张图片，猜测应该用stegsolve合并，然后用ps调色</p><p><img src="/2021/04/19/drf/007juUiNly1gppcu2z3ijj30c009jq3o.jpg" alt="img"></p><p>用QR解二维码得到flag</p><h2 id="Training-Stegano-1"><a href="#Training-Stegano-1" class="headerlink" title="Training-Stegano-1"></a>Training-Stegano-1</h2><p><img src="https://wx2.sinaimg.cn/mw690/007juUiNly1gppcu336ccj30ox02mglk.jpg" alt="img"></p><p>直接记事本打开，直接得到flag</p><h2 id="can-has-stdio"><a href="#can-has-stdio" class="headerlink" title="can_has_stdio?"></a>can_has_stdio?</h2><p><img src="/2021/04/19/drf/007juUiNly1gppcu34dc6j318a0m8glv.jpg" alt="img"></p><p>五角星，有几个字符</p><p>百度知道是brainfuck语言</p><p>解密网站<a href="https://tool.bugku.com/brainfuck/?wafcloud=2">https://tool.bugku.com/brainfuck/?wafcloud=2</a></p><p><img src="/2021/04/19/drf/007juUiNly1gppcu34kfjj30fp06vq2t.jpg" alt="img"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;base64÷4&quot;&gt;&lt;a href=&quot;#base64÷4&quot; class=&quot;headerlink&quot; title=&quot;base64÷4&quot;&gt;&lt;/a&gt;base64÷4&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2021/04/19/drf/007juUiNly1gppcu2jwr</summary>
       
     
     
