@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-07-25T02:32:51.602Z</updated>
+  <updated>2021-07-28T08:05:59.117Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ReverseMe1</title>
+    <link href="http://example.com/2021/07/27/ReverseMe1/"/>
+    <id>http://example.com/2021/07/27/ReverseMe1/</id>
+    <published>2021-07-27T04:02:07.000Z</published>
+    <updated>2021-07-28T08:05:59.117Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="分析ReverseMe1"><a href="#分析ReverseMe1" class="headerlink" title="分析ReverseMe1"></a>分析ReverseMe1</h2><h2 id="一-运行"><a href="#一-运行" class="headerlink" title="一.运行"></a>一.运行</h2><p>打开程序，首先出现了一个Nag,都是废话没有什么用，点击确定，接下来是一个序列号的界面，要求我们输入Regcode。</p><p>两个目标：</p><p>1.删除消息框</p><p>2.寻找Regcode</p><p><img src="/2021/07/27/ReverseMe1/1.PNG" alt="1"></p><p><img src="/2021/07/27/ReverseMe1/2.PNG" alt="2"></p><h2 id="二-分析"><a href="#二-分析" class="headerlink" title="二.分析"></a>二.分析</h2><h3 id="1-去除消息框"><a href="#1-去除消息框" class="headerlink" title="1.去除消息框"></a>1.去除消息框</h3><p><img src="/2021/07/27/ReverseMe1/3.PNG" alt="3"></p><p>用OD打开，看一眼是非常熟悉的Visual Basic代码，猜一下，要调用消息框，要调用MtrcMsgBox函数，直接右键搜索函数</p><p><img src="/2021/07/27/ReverseMe1/4.PNG" alt="4"></p><p>找到调用函数的地方，发现一共有四处调用的地方，给他们下断点</p><p><img src="/2021/07/27/ReverseMe1/5.PNG" alt="5"></p><p>F9运行到第一个断点的地方，往上面再看看就可以看到Nag Screen的字眼，就是显示出来的消息框</p><p><img src="/2021/07/27/ReverseMe1/6.PNG" alt="6"></p><p>那我们要如何修改，才能让他不显示</p><p>本来想直接把call指令修改掉，都是栈内就乱了无法传回去</p><p>接着往上找找看看这段的首在哪里，找到了函数的开头，直接把他改成retn 0x4直接返回,不执行接下来的内容</p><p><img src="/2021/07/27/ReverseMe1/7.PNG" alt="7"></p><h3 id="2-寻找Regcode"><a href="#2-寻找Regcode" class="headerlink" title="2.寻找Regcode"></a>2.寻找Regcode</h3><p><img src="/2021/07/27/ReverseMe1/8.PNG" alt="8"></p><p>先随便输入一个看看是什么结果，看到是Sorry！、、、、通过这个字符串去寻找函数</p><p><img src="/2021/07/27/ReverseMe1/9.PNG" alt="9"></p><p><img src="/2021/07/27/ReverseMe1/10.PNG" alt="10"></p><p>这里就看到了一个I’mlena151，push到栈中，接下来调用了vbaStrCmp的函数，字面上就可以看出来这是一个比较的函数</p><p><img src="/2021/07/27/ReverseMe1/11.PNG" alt="11"></p><p>所以这就是我们要寻找的</p><p><img src="/2021/07/27/ReverseMe1/12.PNG" alt="12"></p><p>成功！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;分析ReverseMe1&quot;&gt;&lt;a href=&quot;#分析ReverseMe1&quot; class=&quot;headerlink&quot; title=&quot;分析ReverseMe1&quot;&gt;&lt;/a&gt;分析ReverseMe1&lt;/h2&gt;&lt;h2 id=&quot;一-运行&quot;&gt;&lt;a href=&quot;#一-运行&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>BUU-reverse2</title>
@@ -397,26 +417,6 @@
       
     <summary type="html">&lt;h2 id=&quot;前述&quot;&gt;&lt;a href=&quot;#前述&quot; class=&quot;headerlink&quot; title=&quot;前述&quot;&gt;&lt;/a&gt;前述&lt;/h2&gt;&lt;p&gt;在 NT 头结束后，紧接着就是区块表，区块表包含每个块在映象中的信息，分别指向不同的区块实体。&lt;/p&gt;
 &lt;h2 id=&quot;区块表&quot;&gt;&lt;a hr</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>攻防世界re1</title>
-    <link href="http://example.com/2021/05/04/re1/"/>
-    <id>http://example.com/2021/05/04/re1/</id>
-    <published>2021-05-04T08:03:47.000Z</published>
-    <updated>2021-05-24T15:23:46.503Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="game"><a href="#game" class="headerlink" title="game"></a><strong>game</strong></h2><p><img src="/2021/05/04/re1/007juUiNly1gq6gkek1wqj30xe0grmxo.jpg" alt="img"></p><p>打开程序显示一些符号，让你玩游戏，赢了就有flag</p><p>用OD打开，搜素字符串，找到flag的定位</p><p><img src="/2021/05/04/re1/007juUiNly1gq6gken485j30sa0daq4l.jpg" alt="img"></p><p>运行到这里，运行这个函数，就可以得到flag</p><p>IDA</p><p>放进IDA，找到main函数</p><p><img src="/2021/05/04/re1/007juUiNly1gq6gkek7k3j30d20ft74l.jpg" alt="img"></p><p>进入sub_457AB4()</p><p><img src="/2021/05/04/re1/007juUiNly1gq6gkemtnij30b30iqt93.jpg" alt="img"></p><p>写个脚本运行</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">arr1</span> =<span class="meta"> [18, 64, 98, 5, 2, 4, 6, 3, 6, 48, 49, 65, 32, 12, 48, 65, 31, 78, 62, 32, 49, 32,</span></span><br><span class="line"><span class="meta">        1, 57, 96, 3, 21, 9, 4, 62, 3, 5, 4, 1, 2, 3, 44, 65, 78, 32, 16, 97, 54, 16, 44,</span></span><br><span class="line"><span class="meta">        52, 32, 64, 89, 45, 32, 65, 15, 34, 18, 16, 0]</span></span><br><span class="line"><span class="attribute">arr2</span> =<span class="meta"> [123, 32, 18, 98, 119, 108, 65, 41, 124, 80, 125, 38, 124, 111, 74, 49,</span></span><br><span class="line"><span class="meta">        83, 108, 94, 108, 84, 6, 96, 83, 44, 121, 104, 110, 32, 95, 117, 101, 99,</span></span><br><span class="line"><span class="meta">        123, 127, 119, 96, 48, 107, 71, 92, 29, 81, 107, 90, 85, 64, 12, 43, 76, 86,</span></span><br><span class="line"><span class="meta">        13, 114, 1, 117, 126, 0]</span></span><br><span class="line"><span class="attribute">str</span>=&#x27;&#x27;</span><br><span class="line"><span class="attribute">for</span> i in range(<span class="number">0</span>,<span class="number">56</span>):</span><br><span class="line">    <span class="attribute">arr2</span>[i] ^= arr<span class="number">1</span>[i]</span><br><span class="line">    <span class="attribute">arr2</span>[i] ^= <span class="number">0</span>x<span class="number">13</span></span><br><span class="line">    <span class="attribute">str</span> =str + chr(arr<span class="number">2</span>[i]);</span><br><span class="line"></span><br><span class="line"><span class="attribute">print</span>(str)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><img src="/2021/05/04/re1/007juUiNly1gq6gkejmp9j30gy025t8k.jpg" alt="img"></p><h2 id="Hello，CTF"><a href="#Hello，CTF" class="headerlink" title="Hello，CTF"></a><strong>Hello，CTF</strong></h2><p>一个exe，运行结果如下：</p><p><img src="/2021/05/04/re1/1567821831010.png" alt="1567821831010"></p><p>IDA找到main函数</p><p><img src="/2021/05/04/re1/007juUiNly1gq6gkey9isj30jt0ikjs3.jpg" alt="img"></p><p>a键直接的到flag</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;game&quot;&gt;&lt;a href=&quot;#game&quot; class=&quot;headerlink&quot; title=&quot;game&quot;&gt;&lt;/a&gt;&lt;strong&gt;game&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2021/05/04/re1/007juUiNly1gq6gkek1</summary>
       
     
     
