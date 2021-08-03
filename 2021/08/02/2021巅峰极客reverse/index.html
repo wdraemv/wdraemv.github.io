@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2021巅峰极客reverse | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="baby_maze看题目本来以为是一道简单的迷宫题，进去之后才发现这么多函数 先找一下string，发现了一个God job这应该就是最后的结果  那可以想到通过这个函数去查看调用它的函数，一步步逆推回去，都是发现是行不通的，函数太多了有7000多个，没有办法找回去，做的时候前后都走不通  后来才知道可以用后向调用为gen_r_call_chain函数，它递归地调用了get_my_caller函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021巅峰极客reverse">
+<meta property="og:url" content="http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="baby_maze看题目本来以为是一道简单的迷宫题，进去之后才发现这么多函数 先找一下string，发现了一个God job这应该就是最后的结果  那可以想到通过这个函数去查看调用它的函数，一步步逆推回去，都是发现是行不通的，函数太多了有7000多个，没有办法找回去，做的时候前后都走不通  后来才知道可以用后向调用为gen_r_call_chain函数，它递归地调用了get_my_caller函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/18.png">
+<meta property="article:published_time" content="2021-08-02T09:42:29.000Z">
+<meta property="article:modified_time" content="2021-08-03T06:30:14.568Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/18.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.3.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-08-03 14:30:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://q2.qlogo.cn/headimg_dl?dst_uin=1034630181&amp;spec=100" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">54</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#baby-maze"><span class="toc-number">1.</span> <span class="toc-text">baby_maze</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MedicalApp"><span class="toc-number">1.1.</span> <span class="toc-text">MedicalApp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xxtea"><span class="toc-number">1.1.1.</span> <span class="toc-text">xxtea</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/18.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">2021巅峰极客reverse</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-08-02T09:42:29.000Z" title="Created 2021-08-02 17:42:29">2021-08-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-08-03T06:30:14.568Z" title="Updated 2021-08-03 14:30:14">2021-08-03</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="baby-maze"><a href="#baby-maze" class="headerlink" title="baby_maze"></a>baby_maze</h1><p>看题目本来以为是一道简单的迷宫题，进去之后才发现这么多函数</p>
+<p>先找一下string，发现了一个God job这应该就是最后的结果</p>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/3.PNG" alt="3"></p>
+<p>那可以想到通过这个函数去查看调用它的函数，一步步逆推回去，都是发现是行不通的，函数太多了有7000多个，没有办法找回去，做的时候前后都走不通</p>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/5.PNG" alt="5"></p>
+<p>后来才知道可以用后向调用为<code>gen_r_call_chain</code>函数，它递归地调用了<code>get_my_caller</code>函数来实现后向调用的追踪.接下来就可以在下面的交互终端run我们的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gen_r_call_chain(<span class="string">&#x27;sub_54DE35&#x27;</span>, <span class="number">600</span>, <span class="string">&#x27;sub_40187C&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/1.PNG" alt="1"></p>
+<p>可以的到几个路径，看第一个符合，再加上第一个函数的S就是最后的结果</p>
+<p>MD5一下就可以得到最后的flag</p>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/6.PNG" alt="6"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;078c8fbc1d0d033f663dcc58e899c101&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="MedicalApp"><a href="#MedicalApp" class="headerlink" title="MedicalApp"></a>MedicalApp</h2><p>题目给了一个安卓APK，APK的主要逻辑都在native里面。</p>
+<p>再chk函数里面就是加密过程，用到了RC4+xxtea</p>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/7.PNG" alt="7"></p>
+<p>找到密钥</p>
+<p><img src="/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/8.PNG" alt="8"></p>
+<p>xxtea的解密</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DELTA 0x9f5776b6  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MX (((z&gt;&gt;5^y<span class="meta-string">&lt;&lt;2) + (y&gt;&gt;3^z&lt;&lt;4)) ^ ((sum^y) + (key[(p&amp;3)^e] ^ z)))  </span></span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">btea</span><span class="params">(<span class="keyword">uint32_t</span> *v, <span class="keyword">int</span> n, <span class="keyword">uint32_t</span> <span class="keyword">const</span> key[<span class="number">4</span>])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">uint32_t</span> y, z, sum;  </span><br><span class="line">    <span class="keyword">unsigned</span> p, rounds, e;  </span><br><span class="line">    <span class="keyword">if</span> (n &gt; <span class="number">1</span>)            <span class="comment">/* Coding Part */</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        rounds = <span class="number">6</span> + <span class="number">52</span>/n;  </span><br><span class="line">        sum = <span class="number">0</span>;  </span><br><span class="line">        z = v[n<span class="number">-1</span>];  </span><br><span class="line">        <span class="keyword">do</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            sum += DELTA;  </span><br><span class="line">            e = (sum &gt;&gt; <span class="number">2</span>) &amp; <span class="number">3</span>;  </span><br><span class="line">            <span class="keyword">for</span> (p=<span class="number">0</span>; p&lt;n<span class="number">-1</span>; p++)  </span><br><span class="line">            &#123;  </span><br><span class="line">                y = v[p+<span class="number">1</span>];  </span><br><span class="line">                z = v[p] += MX;  </span><br><span class="line">            &#125;  </span><br><span class="line">            y = v[<span class="number">0</span>];  </span><br><span class="line">            z = v[n<span class="number">-1</span>] += MX;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">while</span> (--rounds);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (n &lt; <span class="number">-1</span>)      <span class="comment">/* Decoding Part */</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        n = -n;  </span><br><span class="line">        rounds = <span class="number">6</span> + <span class="number">52</span>/n;  </span><br><span class="line">        sum = rounds*DELTA;  </span><br><span class="line">        y = v[<span class="number">0</span>];  </span><br><span class="line">        <span class="keyword">do</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            e = (sum &gt;&gt; <span class="number">2</span>) &amp; <span class="number">3</span>;  </span><br><span class="line">            <span class="keyword">for</span> (p=n<span class="number">-1</span>; p&gt;<span class="number">0</span>; p--)  </span><br><span class="line">            &#123;  </span><br><span class="line">                z = v[p<span class="number">-1</span>];  </span><br><span class="line">                y = v[p] -= MX;  </span><br><span class="line">            &#125;  </span><br><span class="line">            z = v[n<span class="number">-1</span>];  </span><br><span class="line">            y = v[<span class="number">0</span>] -= MX;  </span><br><span class="line">            sum -= DELTA;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">while</span> (--rounds);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> d[] =</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x10</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, </span><br><span class="line">    <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x10</span>, <span class="number">0x00</span>, <span class="number">0x00</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> ida_chars[] =</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="number">0x3E</span>, <span class="number">0x97</span>, <span class="number">0xE5</span>, <span class="number">0x68</span>, <span class="number">0x67</span>, <span class="number">0x73</span>, <span class="number">0x0C</span>, <span class="number">0xC2</span>, <span class="number">0x1B</span>, <span class="number">0xD4</span>, </span><br><span class="line">    <span class="number">0xAF</span>, <span class="number">0x98</span>, <span class="number">0xE2</span>, <span class="number">0x9D</span>, <span class="number">0x4B</span>, <span class="number">0xFE</span>, <span class="number">0x0B</span>, <span class="number">0xB6</span>, <span class="number">0xA5</span>, <span class="number">0x01</span>, </span><br><span class="line">    <span class="number">0x46</span>, <span class="number">0xD6</span>, <span class="number">0x36</span>, <span class="number">0x3D</span>, <span class="number">0xAF</span>, <span class="number">0x7B</span>, <span class="number">0xCC</span>, <span class="number">0xDB</span>, <span class="number">0x00</span>, <span class="number">0x4F</span>, </span><br><span class="line">    <span class="number">0x41</span>, <span class="number">0xA0</span>, <span class="number">0x1A</span>, <span class="number">0xE7</span>, <span class="number">0x2C</span>, <span class="number">0x76</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">uint32_t</span> key[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">uint32_t</span> cipher[<span class="number">9</span>];</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;AOLIGEI111&quot;</span>);</span><br><span class="line">    <span class="built_in">memcpy</span>(key, d, <span class="keyword">sizeof</span>(d));</span><br><span class="line">    <span class="built_in">memcpy</span>(cipher, ida_chars, <span class="keyword">sizeof</span>(ida_chars));</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;AOLIGEI222&quot;</span>); </span><br><span class="line">    <span class="keyword">int</span> n= <span class="number">9</span>;</span><br><span class="line">    btea(cipher, -n, key);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">36</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%02x&quot;</span>, *((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)cipher + i));</span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>RC4</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rc4_crypt</span>(<span class="params">PlainBytes:<span class="built_in">bytes</span>, KeyBytes:<span class="built_in">bytes</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;[summary]</span></span><br><span class="line"><span class="string">    rc4 crypt</span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">        PlainBytes &#123;[bytes]&#125; -- [plain bytes]</span></span><br><span class="line"><span class="string">        KeyBytes &#123;[bytes]&#125; -- [key bytes]</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        [string] -- [hex string]</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line"> </span><br><span class="line">    keystreamList = []</span><br><span class="line">    cipherList = []</span><br><span class="line"> </span><br><span class="line">    keyLen = <span class="built_in">len</span>(KeyBytes)</span><br><span class="line">    plainLen = <span class="built_in">len</span>(PlainBytes)</span><br><span class="line">    S = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">256</span>))</span><br><span class="line"> </span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        j = (j + S[i] + KeyBytes[i % keyLen]) % <span class="number">256</span></span><br><span class="line">        S[i], S[j] = S[j], S[i]</span><br><span class="line"> </span><br><span class="line">    print(<span class="built_in">bytes</span>(S).<span class="built_in">hex</span>())</span><br><span class="line"></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(plainLen):</span><br><span class="line">        i = (i + <span class="number">1</span>) % <span class="number">256</span></span><br><span class="line">        j = (j + S[i]) % <span class="number">256</span></span><br><span class="line">        print(i, j)</span><br><span class="line">        S[i], S[j] = S[j], S[i]</span><br><span class="line">        k = S[(S[i] + S[j]) % <span class="number">256</span>]</span><br><span class="line">        print(S[i], S[j])</span><br><span class="line">        cipherList.append(k ^ PlainBytes[m])</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(cipherList)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = <span class="string">&#x27;5604b0d49c634d3096cec00593be3b82524b16b28a33b74d6d7b9950c2b10c12e1840a93&#x27;</span></span><br><span class="line">    key = <span class="string">&#x27;01000000100000000001000000100000&#x27;</span></span><br><span class="line">    data = <span class="built_in">bytes</span>.fromhex(data)</span><br><span class="line">    key = <span class="built_in">bytes</span>.fromhex(key)</span><br><span class="line">    m = rc4_crypt(data, key)</span><br><span class="line">    print(m)</span><br></pre></td></tr></table></figure>
+<p>RC4解密结果为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;194836950ae9df840e8a94348b901a&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="xxtea"><a href="#xxtea" class="headerlink" title="xxtea"></a>xxtea</h3><p>XXTEA，又称Corrected Block TEA，是XTEA的升级版</p>
+<p>，设计者是Roger Needham, David Wheeler</p>
+<p>加密过程：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1272254-9fcbbcba52c083a9?imageMogr2/auto-orient/strip%7CimageView2/2/w/391/format/webp" alt="img"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/">http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/18.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/08/01/BUU-reverse3/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/6.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">BUU-reverse3</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
