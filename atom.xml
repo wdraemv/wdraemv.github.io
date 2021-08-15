@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-08-09T08:30:13.504Z</updated>
+  <updated>2021-08-15T08:15:44.363Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BUU-reverse4</title>
+    <link href="http://example.com/2021/08/15/BUU-reverse3-1/"/>
+    <id>http://example.com/2021/08/15/BUU-reverse3-1/</id>
+    <published>2021-08-15T08:02:22.000Z</published>
+    <updated>2021-08-15T08:15:44.363Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="FlareOn5-Ultimate-Minesweeper"><a href="#FlareOn5-Ultimate-Minesweeper" class="headerlink" title="[FlareOn5]Ultimate Minesweeper"></a>[FlareOn5]Ultimate Minesweeper</h1><p>打开发现是一个扫雷的游戏，一点都是雷。猜测这个是.NET文件，用dnspy打开</p><p>找到主函数。</p><p><img src="/2021/08/15/BUU-reverse3-1/7.PNG" alt="7"></p><p>点进去，发现有一个<code>GetKey()</code>函数，估计这个函数就是输出flag的函数了。</p><p><img src="/2021/08/15/BUU-reverse3-1/6.PNG" alt="6"></p><p>通过函数内的调用找到判断的地方</p><p><img src="/2021/08/15/BUU-reverse3-1/hexo\source_posts\BUU-reverse3-1\5.PNG" alt="5"></p><p>通过分析代码可以知到上图中的第一个if语句是用来输出fail的（也就是踩到雷之后，游戏结束。）我们可以直接把判断的地方注释掉，踩到雷就不会结束</p><p><img src="/2021/08/15/BUU-reverse3-1/4.PNG" alt="4"></p><p>保存运行，疯狂点</p><p><img src="/2021/08/15/BUU-reverse3-1/3.PNG" alt="3"></p><p>3个8的地方记住，到原来的程序中点出来，就可以得到flag</p><p><img src="/2021/08/15/BUU-reverse3-1/8.PNG" alt="8"></p><h1 id="FlareOn1-Bob-Doge"><a href="#FlareOn1-Bob-Doge" class="headerlink" title="[FlareOn1]Bob Doge"></a>[FlareOn1]Bob Doge</h1><p>先安装一下程序，32位程序，c++写的，无壳</p><p><img src="/2021/08/15/BUU-reverse3-1/11.PNG" alt="11"></p><p>试着运行一下</p><p><img src="/2021/08/15/BUU-reverse3-1/99.PNG" alt="99"></p><p>dnspy打开,找到DECODE的地方</p><p><img src="/2021/08/15/BUU-reverse3-1/13.PNG" alt="13"></p><p>程序进行了三次运算，得到了text，text2和text3，最后回显text3。 直接在函数末尾下断 运行 截取到flag</p><p><img src="/2021/08/15/BUU-reverse3-1/12.PNG" alt="12"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;FlareOn5-Ultimate-Minesweeper&quot;&gt;&lt;a href=&quot;#FlareOn5-Ultimate-Minesweeper&quot; class=&quot;headerlink&quot; title=&quot;[FlareOn5]Ultimate Minesweeper&quot;&gt;&lt;/</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>运行时压缩</title>
@@ -392,28 +412,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;ESP定律&quot;&gt;&lt;a href=&quot;#ESP定律&quot; class=&quot;headerlink&quot; title=&quot;ESP定律&quot;&gt;&lt;/a&gt;ESP定律&lt;/h1&gt;&lt;h2 id=&quot;一-准备知识&quot;&gt;&lt;a href=&quot;#一-准备知识&quot; class=&quot;headerlink&quot; title=&quot;一</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>BUU新年快乐</title>
-    <link href="http://example.com/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/"/>
-    <id>http://example.com/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/</id>
-    <published>2021-06-01T13:57:59.000Z</published>
-    <updated>2021-06-01T14:06:38.632Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="新年快乐"><a href="#新年快乐" class="headerlink" title="新年快乐"></a>新年快乐</h1><p>打开IDA一看怎么就两个函数，有问题</p><p>查一下壳，有一个UPX壳</p><p><img src="/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/ke.PNG" alt="ke"></p><p>可以用工具直接脱壳，这里用一下OD手动脱壳,采用ESP定律的方法找OEP</p><p><img src="/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/r.PNG" alt="r"></p><p>打开往上找直接看到了POPAX</p><p>直接在jmp新年快乐处下断点，F9运行到这里，F8就跳转到OEP</p><p><img src="/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/4.PNG" alt="4"></p><p>直接右键用OD自带的脱壳</p><p>得到一个新的程序</p><p>打开直接查看main函数</p><p><img src="/2021/06/01/BUU%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/12.PNG" alt="12"></p><p>是一个简单的比较</p><p>flag就是：<strong>flag{HappyNewYear!}</strong></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;新年快乐&quot;&gt;&lt;a href=&quot;#新年快乐&quot; class=&quot;headerlink&quot; title=&quot;新年快乐&quot;&gt;&lt;/a&gt;新年快乐&lt;/h1&gt;&lt;p&gt;打开IDA一看怎么就两个函数，有问题&lt;/p&gt;
-&lt;p&gt;查一下壳，有一个UPX壳&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/2021/</summary>
       
     
     
