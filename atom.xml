@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-08-15T08:15:44.363Z</updated>
+  <updated>2021-08-16T08:48:14.041Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基址重定位表</title>
+    <link href="http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/"/>
+    <id>http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/</id>
+    <published>2021-08-16T08:28:09.000Z</published>
+    <updated>2021-08-16T08:48:14.041Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="基址重定位表"><a href="#基址重定位表" class="headerlink" title="基址重定位表"></a>基址重定位表</h1><h2 id="PE重定位"><a href="#PE重定位" class="headerlink" title="PE重定位"></a>PE重定位</h2><p>向进程的虚拟内存加载PE文件(EXE/DLL/SYS)时，文件会被加载到PE头的ImageBase所指的地址处。若加载的是DLL ( SYS)文件，且在ImageBase位置处已经加载了其他DLL (SYS)文件，那么PE装载器就会将其加载到其他未被占用的空间。这就涉及PE文件重定位的问题，PE重定位是指PE文件无法加载到ImageBase所指位置,而是被加载到其他地址时发生的一系列的处理行为。</p><h3 id="DLL-SYS"><a href="#DLL-SYS" class="headerlink" title="DLL/SYS"></a>DLL/SYS</h3><p>A.DLL被加载到TEST.EXE进程的10000000地址处。此后，B.DLL试图加载到相同地址(（ 10000000 )时，PE装载器将B.DLL加载到另一个尚未被占用的地址（3CO00000)处。</p><p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/1.PNG" alt="1"></p><h3 id="EXE"><a href="#EXE" class="headerlink" title="EXE"></a>EXE</h3><p>创建好进程后，EXE文件会首先加载到内存，所以在EXE中无须考虑重定位的问题。但是Windows Vista之后的版本引入了ASLR安全机制，每次运行EXE文件都会被加载到随机地址，这样大大增强了系统安全性。</p><h2 id="PE重定位的基本原理："><a href="#PE重定位的基本原理：" class="headerlink" title="PE重定位的基本原理："></a>PE重定位的基本原理：</h2><p>1、在应用程序中查找硬编码的地址位置；</p><p>2、读取值后，减去ImageBase（VA转换为RVA）；</p><p>3、加上实际加载地址（RVA转换为VA）。</p><h2 id="基址重定位表："><a href="#基址重定位表：" class="headerlink" title="基址重定位表："></a>基址重定位表：</h2><p>基址重定位表位于PE头的DataDirectory数组的第六个元素（索引为5），如图：</p><p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/2.PNG" alt="2"></p><p>其地址为0002F000，查看一下：</p><p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/3.PNG" alt="3"></p><p>如图罗列了硬编码地址的偏移。</p><p>基址重定位表是IMAGE_BASE_RELOCATION结构体数组，其中第一个成员为VirtualAddress如地址2F000的值，第二个成员为SizeOfBlock如地址2F004的值，第三个成员为TypeOffset数组如2F008地址以下的值，以注释的形式存在，表示该结构体之下会出现WORD类型的数组，并且该数组元素的值就是硬编码在程序中的地址偏移。</p><h2 id="基址重定位表的分析方法："><a href="#基址重定位表的分析方法：" class="headerlink" title="基址重定位表的分析方法："></a>基址重定位表的分析方法：</h2><p>如上图，VirtualAddress的值为1000，SizeOfBlock的值为150，即TypeOffset数组的基准地址为RVA 1000，块的总大小为150。其中，TypeOffset值为2字节（16位）大小，由4位的Type和12位的Offset组成，比如TypeOffset数组的第一个元素值为3420，其中高4位的值“3”（IMAGE_REL_BASED_HIGHLOW）为Type，一般为PE文件，而64位的PE文件常见值为“A”，低12位是真正的位移、其值为420，下面公式计算程序中硬编码地址的偏移：</p><p>VirtualAddress + Offset = 1000 + 420 = 1420（RVA）</p><p>查看1420偏移处（程序被加载到00330000地址处、故RVA 1420即VA 00331420）是否存在要执行PE重定位操作的硬编码地址：</p><p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/4.PNG" alt="4"></p><p>运行notepad.exe程序，假设其被加载到00330000。</p><p>1、查找程序中硬编码地址的位置：</p><p>使用PEView查看RVAV 1420处的内容：</p><p>可以看到，RVAV 1420处保存着程序硬编码地址值010010C4。</p><p>2、读取值后，减去ImageBase值（VA转换为RVA）：</p><p>010010C4 - 01000000 = 10C4</p><p>3、加上实际加载地址（RVA转换为VA）：</p><p>10C4 + 00330000 = 003310C4</p><p>可以看到，和上图硬编码地址一致。</p><p>对于程序内硬编码的地址，PE装载器都会做如上处理，然后将值覆盖到同一位置。若TypeOffset值为0，则表明一个IMAGE_BASE_RELOCATION结构体结束。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;基址重定位表&quot;&gt;&lt;a href=&quot;#基址重定位表&quot; class=&quot;headerlink&quot; title=&quot;基址重定位表&quot;&gt;&lt;/a&gt;基址重定位表&lt;/h1&gt;&lt;h2 id=&quot;PE重定位&quot;&gt;&lt;a href=&quot;#PE重定位&quot; class=&quot;headerlink&quot; title=</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>BUU-reverse4</title>
@@ -392,26 +412,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;PaperPlease&quot;&gt;&lt;a href=&quot;#PaperPlease&quot; class=&quot;headerlink&quot; title=&quot;PaperPlease&quot;&gt;&lt;/a&gt;PaperPlease&lt;/h2&gt;&lt;p&gt;先查壳，发现没有，用IDA打开，比较简单，直接看main函数&lt;/p&gt;</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ESP定理</title>
-    <link href="http://example.com/2021/06/01/ESP%E5%AE%9A%E7%90%86/"/>
-    <id>http://example.com/2021/06/01/ESP%E5%AE%9A%E7%90%86/</id>
-    <published>2021-06-01T14:07:58.000Z</published>
-    <updated>2021-06-01T14:09:54.981Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h1><h2 id="一-准备知识"><a href="#一-准备知识" class="headerlink" title="一.准备知识"></a>一.准备知识</h2><p>在我们开始讨论ESP定律之前，我先给你讲解一下一些简单的汇编知识。<br>1.call<br>这个命令是访问子程序的一个汇编基本指令。也许你说，这个我早就知道了！别急请继续看完。call真正的意义是什么呢？我们可以这样来理解： </p><p>向堆栈中压入下一行程序的地址；<br>JMP到call的子程序地址处。<br>例如：<br>00401029.E8 DA240A00 call 004A3508<br>0040102E.5A          pop edx<br>在执行了00401029以后，程序会将0040102E压入堆栈，然后JMP到004A3508地址处！ </p><p>2.RETN<br>与call对应的就是RETN了。对于RETN我们可以这样来理解：<br>将当前的ESP中指向的地址出栈；<br>JMP到这个地址。<br>这个就完成了一次调用子程序的过程。在这里关键的地方是：如果我们要返回父程序，则当我们在堆栈中进行堆栈的操作的时候，一定要保证在RETN这条指令之前，ESP指向的是我们压入栈中的地址。这也就是著名的“堆栈平衡”原理！ </p><p>3.狭义ESP定律<br>ESP定律的原理就是“堆栈平衡”原理。<br>让我们来到程序的入口处看看吧！<br>1.这个是加了ASPACK壳的入口时各个寄存器的值！<br>EAX 00000000<br>ECX 0012FFB0<br>EDX 7FFE0304  //堆栈值<br>EBX 7FFDF000  //堆栈值<br>ESP 0012FFC4<br>EBP 0012FFF0<br>ESI 77F57D70 ntdll.77F57D70<br>EDI 77F944A8 ntdll.77F944A8<br>EIP 0040D000 ASPACK.<ModuleEntryPoint><br>2.这个是ASPACK壳JMP到OEP后的寄存器的值！<br>EAX 004010CC ASPACK.004010CC<br>ECX 0012FFB0<br>EDX 7FFE0304  //堆栈值<br>EBX 7FFDF000  //堆栈值<br>ESP 0012FFC4<br>EBP 0012FFF0<br>ESI 77F57D70 ntdll.77F57D70<br>EDI 77F944A8 ntdll.77F944A8<br>EIP 004010CC ASPACK.004010CC<br>呵呵~是不是除了EIP不同以外，eax保存当前OEP值，其他都一模一样啊！<br>为什么会这样呢？我们来看看 </ModuleEntryPoint></p><p>0040D000 A&gt;  60               pushad  //注意这里ESP=0012FFC4<br>0040D001     E8 00000000      call ASPACK.0040D006  //ESP=0012FFA4 </p><p>PUSHAD就是把所有寄存器压栈！我们在到壳的最后看看： </p><p>0040D558     61               popad  //ESP=0012FFA4<br>0040D559     75 08            jnz short ASPACK.0040D563 //注意这里ESP=0012FFC4 </p><p>也就是说当我们对ESP的0012FFA4下硬件访问断点之后。当程序要通过堆栈访问这些值<br>，从而恢复原来寄存器的值，准备跳向苦苦寻觅的OEP的时候，OD帮助我们中断下来。 </p><p>小结：我们可以把壳假设为一个子程序，当壳把代码解压前和解压后，他必须要做的是遵循堆栈平衡的原理。 </p><p>因为大家对ESP理解各有异同，但是，大同小异！一般理解可以为：<br>1、在命令行下断hr esp-4（此时的ESP就是OD载入后当前显示的值）<br>2、hr ESP(关键标志下一行代码所指示的ESP值(单步通过))</p><h3 id="1-ESP定律的原理是什么？"><a href="#1-ESP定律的原理是什么？" class="headerlink" title="1.ESP定律的原理是什么？"></a>1.ESP定律的原理是什么？</h3><p>堆栈平衡原理。 </p><h3 id="2-ESP定律的适用范围是什么？"><a href="#2-ESP定律的适用范围是什么？" class="headerlink" title="2.ESP定律的适用范围是什么？"></a>2.ESP定律的适用范围是什么？</h3><p>几乎全部的压缩壳，部分加密壳。只要是在JMP到OEP后，ESP=0012FFC4的壳，理论上我们都可以使用。但是在何时下断点避开校验，何时下断OD才能断下来，这还需要多多总结和多多积累。 </p><h3 id="3-是不是只能下断12FFA4的访问断点？"><a href="#3-是不是只能下断12FFA4的访问断点？" class="headerlink" title="3.是不是只能下断12FFA4的访问断点？"></a>3.是不是只能下断12FFA4的访问断点？</h3><p>当然不是，那只是ESP定律的一个体现，我们运用的是ESP定律的原理，而不应该是他的具体数值，不能说12FFA4，或者12FFC0就是ESP定律，他们只是ESP定律的一个应用罢了！ </p><p>内存断点<br>   1、要解决的问题是：<br>   1.什么是内存断点？<br>   2.如何在寻找OEP时使用内存断点。 </p><h3 id="4、内存断点寻找OEP的原理"><a href="#4、内存断点寻找OEP的原理" class="headerlink" title="4、内存断点寻找OEP的原理"></a>4、内存断点寻找OEP的原理</h3><p>i. 首先，在OD中内存断点和普通断点（F2下断）是有本质区别的。 </p><p>内存断点等效于命令bpm，他的中断要用到DR0-DR7的调试寄存器，也就是说OD通过这些DR0-DR7的调试寄存器来判断是否断下普通断点（F2下断）等效于bpx，他是在所执行的代码的当前地址的一个字节修改为CC（int3）。当程序运行到int3的时候就会产生一个异常，而这个异常将交给OD处理，把这个异常给EIP-1以后，就正好停在了需要的中断的地方（这个根据系统不同会不一样），同时OD在把上面的int3修改回原来的代码。<br>内存断点分为：内存访问断点，内存写入断点。<br>我们知道，在程序运行的时候会有3种基本的状态产生：读取–&gt;写入–&gt;执行。 </p><p>004AE242   A1 00104000  mov eax,dword ptr ds:[004AE24C]  //004AE24C处的内存读取<br>004AE247   A3 00104000  mov dword ptr ds:[004AE24C],eax  //004AE24C处的内存写入<br>004AE24C   83C0 01      add eax,1                       //004AE24C处的内存执行 </p><p>  1.当对004AE24C下内存访问断点的时候，可以中断在004AE242也可以中断在004AE247。<br>  2.当对004AE24C下内存写入断点的时候，只能中断在004AE247。<br>   3．当执行004AE24C的时候，只能中断在004AE24C </p><p>到这里你可能不明白了，为什么内存访问断点能中断在004AE247这一句对004AE24C的写入，而且还能中断在004AE24C的执行呢？其实很简单，我们只要仔细体会一下“内存访问”这四个字的含义遍可以知道，当我们对004AE24C进行读取的时候需要“访问”他吧，当我对004AE24C进行写入的时候也需要“访问”他吧！！当然我们要执行内存地址004AE24C的代码的时候也是还是要“访问”他的！ </p><p>  所以我们不难得出下面的结论：<br>  1.内存写入中断的地方，一定是也可以用内存访问中断。<br>  2.内存执行的地方，也可以用内存访问中断。 </p><p>如果这时你认为，那么内存写入岂不是没用了。呵呵~那我要告诉你当然不是，如果你想快速的准确的定位到004AE247这一行的时候，那么他就大有作用了！ </p><p> 总结一下：内存断点不修改原代码，不会像普通断点那样因为修改代码被程序校验而导致中断失败；对于区段的访问只是区域大了一点，其原理和上面分析的三行代码是一样的。 </p><p>  ii.如何使用内存断点来寻找OEP呢？<br>  要回答这个问题首先要回答这一个问题：壳是如何解压代码的？ </p><p>正如我们知道的，壳如果要把原来加密或压缩的代码运行起来就必须要解压和解密原来的代码。而这一个过程我们难道不能将他看做是对代码段（code段）的写入吗？好了，解压完毕了。我们要从壳代码的区段JMP到原来的代码段的时候，难道不正是对代码段（code段）的执行吗？ </p><p>理清了上面的关系就好办了，那么如果载入OD后，我们直接对code段下内存访问断点的时候，一定会中断在壳对code段的写入的代码的上面，就像上面的004AE247的这一行。而如果当他把code段的代码全部解压解密完毕了以后，JMP到OEP的时候，我们是不是还可以停在OEP的代码上面呢？而且每按下F9都会中断，因为这时code段在执行中哦！ </p><p>而如果你还要继续问我为什么一定要到那个地方才可以下断呢？我难道不可以一开始就下断吗？ </p><p>正入我上面所说的，如果你在前面下断很可能壳对code段还没解压完毕呢，这时如果你不停的按F9，你将会看到OD的下方不断的在提示你，“对401000写入中断”“对401002写入中断”“对401004写入中断”…….如果你不介意按F9到他把正个code段写完的话，我除了同情你的“F9”以外，没什么其他的意见！ </p><p>  那么我们就没有别更快一点的办法了吗？<br>  有的！那就是我们呼之欲出的两次内存断点办法。<br>  怎么理解两次内存断点呢？ </p><p>让我来做一个假设吧，假设我是一个壳的作者。一个EXE文件的有code段，data段，rsrc段…..依次排列在你的内存空间中，那么我会怎么解码呢？呵呵~我比较笨一点，我会先将code段解码，然后再将data段解压，接着是rsrc段……那么你不难发现，只要你在data断或者rsrc段下内存访问断点，那么中断的时候code段就已经解压完毕了。这时我们再对code段下内存访问断点，不就可以到达OEP了吗？ </p><p>  这里注意上面虽然下了两次内存访问断点，但是本质是不一样的，目的也是不一样的。 </p><p> 1.对data段下内存访问断点而中断是因为内存写入中断，目的是断在对对data段的解压时，这时壳要对data段写数据，但是code段已经解压 完毕。<br> 2.对code段下内存访问断点而中断是因为内存执行中断，目的当然就是寻找OEP了。 </p><p> 总结一下：如果我们知道壳在什么地方对code段解压完毕我们就可以使用内存断点，找到OEP。如果不知道，那么我们就依靠2次内存断点去找，如果还不行就用多次内存断点。总之明白了原理在多次的内存断点其实都一样。从这个过程中我们了解的是壳在对区段解码的顺序！ </p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;ESP定律&quot;&gt;&lt;a href=&quot;#ESP定律&quot; class=&quot;headerlink&quot; title=&quot;ESP定律&quot;&gt;&lt;/a&gt;ESP定律&lt;/h1&gt;&lt;h2 id=&quot;一-准备知识&quot;&gt;&lt;a href=&quot;#一-准备知识&quot; class=&quot;headerlink&quot; title=&quot;一</summary>
       
     
     

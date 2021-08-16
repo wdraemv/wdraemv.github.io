@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>基址重定位表 | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="基址重定位表PE重定位向进程的虚拟内存加载PE文件(EXE&#x2F;DLL&#x2F;SYS)时，文件会被加载到PE头的ImageBase所指的地址处。若加载的是DLL ( SYS)文件，且在ImageBase位置处已经加载了其他DLL (SYS)文件，那么PE装载器就会将其加载到其他未被占用的空间。这就涉及PE文件重定位的问题，PE重定位是指PE文件无法加载到ImageBase所指位置,而是被加载到其他地址时发生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基址重定位表">
+<meta property="og:url" content="http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="基址重定位表PE重定位向进程的虚拟内存加载PE文件(EXE&#x2F;DLL&#x2F;SYS)时，文件会被加载到PE头的ImageBase所指的地址处。若加载的是DLL ( SYS)文件，且在ImageBase位置处已经加载了其他DLL (SYS)文件，那么PE装载器就会将其加载到其他未被占用的空间。这就涉及PE文件重定位的问题，PE重定位是指PE文件无法加载到ImageBase所指位置,而是被加载到其他地址时发生">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/16.png">
+<meta property="article:published_time" content="2021-08-16T08:28:09.000Z">
+<meta property="article:modified_time" content="2021-08-16T08:48:14.041Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/16.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.3.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-08-16 16:48:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://q2.qlogo.cn/headimg_dl?dst_uin=1034630181&amp;spec=100" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">60</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">基址重定位表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.1.</span> <span class="toc-text">PE重定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DLL-SYS"><span class="toc-number">1.1.1.</span> <span class="toc-text">DLL&#x2F;SYS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXE"><span class="toc-number">1.1.2.</span> <span class="toc-text">EXE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">PE重定位的基本原理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">基址重定位表：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8%E7%9A%84%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">基址重定位表的分析方法：</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/16.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">基址重定位表</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-08-16T08:28:09.000Z" title="Created 2021-08-16 16:28:09">2021-08-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-08-16T08:48:14.041Z" title="Updated 2021-08-16 16:48:14">2021-08-16</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="基址重定位表"><a href="#基址重定位表" class="headerlink" title="基址重定位表"></a>基址重定位表</h1><h2 id="PE重定位"><a href="#PE重定位" class="headerlink" title="PE重定位"></a>PE重定位</h2><p>向进程的虚拟内存加载PE文件(EXE/DLL/SYS)时，文件会被加载到PE头的ImageBase所指的地址处。若加载的是DLL ( SYS)文件，且在ImageBase位置处已经加载了其他DLL (SYS)文件，那么PE装载器就会将其加载到其他未被占用的空间。这就涉及PE文件重定位的问题，PE重定位是指PE文件无法加载到ImageBase所指位置,而是被加载到其他地址时发生的一系列的处理行为。</p>
+<h3 id="DLL-SYS"><a href="#DLL-SYS" class="headerlink" title="DLL/SYS"></a>DLL/SYS</h3><p>A.DLL被加载到TEST.EXE进程的10000000地址处。此后，B.DLL试图加载到相同地址(（ 10000000 )时，PE装载器将B.DLL加载到另一个尚未被占用的地址（3CO00000)处。</p>
+<p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/1.PNG" alt="1"></p>
+<h3 id="EXE"><a href="#EXE" class="headerlink" title="EXE"></a>EXE</h3><p>创建好进程后，EXE文件会首先加载到内存，所以在EXE中无须考虑重定位的问题。但是Windows Vista之后的版本引入了ASLR安全机制，每次运行EXE文件都会被加载到随机地址，这样大大增强了系统安全性。</p>
+<h2 id="PE重定位的基本原理："><a href="#PE重定位的基本原理：" class="headerlink" title="PE重定位的基本原理："></a>PE重定位的基本原理：</h2><p>1、在应用程序中查找硬编码的地址位置；</p>
+<p>2、读取值后，减去ImageBase（VA转换为RVA）；</p>
+<p>3、加上实际加载地址（RVA转换为VA）。</p>
+<h2 id="基址重定位表："><a href="#基址重定位表：" class="headerlink" title="基址重定位表："></a>基址重定位表：</h2><p>基址重定位表位于PE头的DataDirectory数组的第六个元素（索引为5），如图：</p>
+<p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/2.PNG" alt="2"></p>
+<p>其地址为0002F000，查看一下：</p>
+<p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/3.PNG" alt="3"></p>
+<p>如图罗列了硬编码地址的偏移。</p>
+<p>基址重定位表是IMAGE_BASE_RELOCATION结构体数组，其中第一个成员为VirtualAddress如地址2F000的值，第二个成员为SizeOfBlock如地址2F004的值，第三个成员为TypeOffset数组如2F008地址以下的值，以注释的形式存在，表示该结构体之下会出现WORD类型的数组，并且该数组元素的值就是硬编码在程序中的地址偏移。</p>
+<h2 id="基址重定位表的分析方法："><a href="#基址重定位表的分析方法：" class="headerlink" title="基址重定位表的分析方法："></a>基址重定位表的分析方法：</h2><p>如上图，VirtualAddress的值为1000，SizeOfBlock的值为150，即TypeOffset数组的基准地址为RVA 1000，块的总大小为150。其中，TypeOffset值为2字节（16位）大小，由4位的Type和12位的Offset组成，比如TypeOffset数组的第一个元素值为3420，其中高4位的值“3”（IMAGE_REL_BASED_HIGHLOW）为Type，一般为PE文件，而64位的PE文件常见值为“A”，低12位是真正的位移、其值为420，下面公式计算程序中硬编码地址的偏移：</p>
+<p>VirtualAddress + Offset = 1000 + 420 = 1420（RVA）</p>
+<p>查看1420偏移处（程序被加载到00330000地址处、故RVA 1420即VA 00331420）是否存在要执行PE重定位操作的硬编码地址：</p>
+<p><img src="/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/4.PNG" alt="4"></p>
+<p>运行notepad.exe程序，假设其被加载到00330000。</p>
+<p>1、查找程序中硬编码地址的位置：</p>
+<p>使用PEView查看RVAV 1420处的内容：</p>
+<p>可以看到，RVAV 1420处保存着程序硬编码地址值010010C4。</p>
+<p>2、读取值后，减去ImageBase值（VA转换为RVA）：</p>
+<p>010010C4 - 01000000 = 10C4</p>
+<p>3、加上实际加载地址（RVA转换为VA）：</p>
+<p>10C4 + 00330000 = 003310C4</p>
+<p>可以看到，和上图硬编码地址一致。</p>
+<p>对于程序内硬编码的地址，PE装载器都会做如上处理，然后将值覆盖到同一位置。若TypeOffset值为0，则表明一个IMAGE_BASE_RELOCATION结构体结束。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/">http://example.com/2021/08/16/%E5%9F%BA%E5%9D%80%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/16.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/08/15/BUU-reverse3-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/GlumeL/Photos/menhera/15.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">BUU-reverse4</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
