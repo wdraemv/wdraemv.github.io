@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-19T13:38:13.717Z</updated>
+  <updated>2021-10-21T11:56:32.814Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>160crackme-01</title>
+    <link href="http://example.com/2021/10/21/160crackme01/"/>
+    <id>http://example.com/2021/10/21/160crackme01/</id>
+    <published>2021-10-21T11:39:31.000Z</published>
+    <updated>2021-10-21T11:56:32.814Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;程序是使用delphi编写的 无壳&lt;/p&gt;
+&lt;h1 id=&quot;分析程序&quot;&gt;&lt;a href=&quot;#分析程序&quot; class=&quot;headerlink&quot; title=&quot;分析程序&quot;&gt;&lt;/a&gt;分析程序&lt;/h1&gt;&lt;p&gt;整个程序分为两部分 一个是序列号+用户名 一个是单纯的序列号</summary>
+        
+      
+    
+    
+    
+    <category term="逆向" scheme="http://example.com/categories/%E9%80%86%E5%90%91/"/>
+    
+    
+    <category term="crackme" scheme="http://example.com/tags/crackme/"/>
+    
+  </entry>
   
   <entry>
     <title>鲲鹏杯RE WP</title>
@@ -408,27 +434,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;baby-maze&quot;&gt;&lt;a href=&quot;#baby-maze&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>BUU-reverse3</title>
-    <link href="http://example.com/2021/08/01/BUU-reverse3/"/>
-    <id>http://example.com/2021/08/01/BUU-reverse3/</id>
-    <published>2021-08-01T02:26:16.000Z</published>
-    <updated>2021-08-01T02:49:37.297Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;BJDCTF2020-BJD-hamburger-competition&quot;&gt;&lt;a href=&quot;#BJDCTF2020-BJD-hamburger-competition&quot; class=&quot;headerlink&quot; title=&quot;[BJDCTF2020]BJD</summary>
         
       
     
