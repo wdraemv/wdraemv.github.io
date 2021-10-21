@@ -2,7 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2021/10/21/160crackme01/</loc>
+    <loc>http://example.com/2021/09/20/typecho/</loc>
+    
+    <lastmod>2021-10-21</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/10/04/base64%E8%BD%AC%E5%9B%BE%E7%89%87/</loc>
+    
+    <lastmod>2021-10-21</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/10/04/DASCTF20219/</loc>
     
     <lastmod>2021-10-21</lastmod>
     
@@ -11,21 +25,14 @@
   <url>
     <loc>http://example.com/2021/10/17/%E9%B2%B2%E9%B9%8F%E6%9D%AFre%20wp/</loc>
     
-    <lastmod>2021-10-19</lastmod>
+    <lastmod>2021-10-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2021/10/04/base64%E8%BD%AC%E5%9B%BE%E7%89%87/</loc>
+    <loc>http://example.com/2021/10/21/160crackme01/</loc>
     
-    <lastmod>2021-10-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://example.com/2021/10/04/DASCTF20219/</loc>
-    
-    <lastmod>2021-10-04</lastmod>
+    <lastmod>2021-10-21</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>http://example.com/2021/09/22/babyvm/</loc>
     
     <lastmod>2021-09-22</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://example.com/2021/09/20/typecho/</loc>
-    
-    <lastmod>2021-09-20</lastmod>
     
   </url>
   
@@ -542,10 +542,59 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/tags/brainfuck/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E9%B2%B2%E9%B9%8F%E6%9D%AF/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Typecho%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/base%E5%9B%BE%E7%89%87/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
     <loc>http://example.com/categories/%E9%80%86%E5%90%91/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/CTF/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/wp/</loc>
+    <lastmod>2021-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/Web/</loc>
     <lastmod>2021-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
