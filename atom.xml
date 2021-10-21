@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-21T11:56:32.814Z</updated>
+  <updated>2021-10-21T12:15:49.296Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>160crackme02</title>
+    <link href="http://example.com/2021/10/21/160crackme02/"/>
+    <id>http://example.com/2021/10/21/160crackme02/</id>
+    <published>2021-10-21T12:07:08.000Z</published>
+    <updated>2021-10-21T12:15:49.296Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;程序使用Virtual Basic写的 无壳&lt;/p&gt;
+&lt;h1 id=&quot;分析程序&quot;&gt;&lt;a href=&quot;#分析程序&quot; class=&quot;headerlink&quot; title=&quot;分析程序&quot;&gt;&lt;/a&gt;分析程序&lt;/h1&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="逆向" scheme="http://example.com/categories/%E9%80%86%E5%90%91/"/>
+    
+    
+    <category term="crackme" scheme="http://example.com/tags/crackme/"/>
+    
+  </entry>
   
   <entry>
     <title>160crackme-01</title>
@@ -429,27 +455,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;GXYCTF2019-simple-CPP&quot;&gt;&lt;a href=&quot;#GXYCTF2019-simple-CPP&quot; class=&quot;headerlink&quot; title=&quot;[GXYCTF2019]simple CPP&quot;&gt;&lt;/a&gt;[GXYCTF2019]simple</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>2021巅峰极客reverse</title>
-    <link href="http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/"/>
-    <id>http://example.com/2021/08/02/2021%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2reverse/</id>
-    <published>2021-08-02T09:42:29.000Z</published>
-    <updated>2021-08-03T06:30:14.568Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;baby-maze&quot;&gt;&lt;a href=&quot;#baby-maze&quot; class=&quot;headerlink&quot;</summary>
         
       
     
