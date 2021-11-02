@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-21T12:15:49.296Z</updated>
+  <updated>2021-11-02T03:30:31.148Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DASCTF Oct X 吉林工师 逆向</title>
+    <link href="http://example.com/2021/11/02/buu10yue/"/>
+    <id>http://example.com/2021/11/02/buu10yue/</id>
+    <published>2021-11-02T02:19:48.000Z</published>
+    <updated>2021-11-02T03:30:31.148Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;DASCTF-Oct-X-吉林工师-逆向&quot;&gt;&lt;a href=&quot;#DASCTF-Oct-X-吉林工师-逆向&quot; class=&quot;headerlink&quot; title=&quot;DASCTF Oct X 吉林工师 逆向&quot;&gt;&lt;/a&gt;DASCTF Oct X 吉林工师</summary>
+        
+      
+    
+    
+    
+    <category term="CTF" scheme="http://example.com/categories/CTF/"/>
+    
+    
+    <category term="base91 pyc" scheme="http://example.com/tags/base91-pyc/"/>
+    
+  </entry>
   
   <entry>
     <title>160crackme02</title>
@@ -434,27 +459,6 @@
         
         
     <summary type="html">&lt;h2 id=&quot;IDC的变量&quot;&gt;&lt;a href=&quot;#IDC的变量&quot; class=&quot;headerlink&quot; title=&quot;IDC的变量&quot;&gt;&lt;/a&gt;IDC的变量&lt;/h2&gt;&lt;p&gt;idc使用三种基本数据类型</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CPP</title>
-    <link href="http://example.com/2021/08/05/CPP/"/>
-    <id>http://example.com/2021/08/05/CPP/</id>
-    <published>2021-08-05T02:40:07.000Z</published>
-    <updated>2021-08-05T03:24:48.420Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;GXYCTF2019-simple-CPP&quot;&gt;&lt;a href=&quot;#GXYCTF2019-simple-CPP&quot; class=&quot;headerlink&quot; title=&quot;[GXYCTF2019]simple CPP&quot;&gt;&lt;/a&gt;[GXYCTF2019]simple</summary>
         
       
     
