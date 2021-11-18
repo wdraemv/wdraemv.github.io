@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-18T06:44:23.657Z</updated>
+  <updated>2021-11-18T07:09:38.586Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>160crackme04</title>
+    <link href="http://example.com/2021/11/18/160crackme04/"/>
+    <id>http://example.com/2021/11/18/160crackme04/</id>
+    <published>2021-11-18T06:57:02.000Z</published>
+    <updated>2021-11-18T07:09:38.586Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;查壳&quot;&gt;&lt;a href=&quot;#查壳&quot; class=&quot;headerlink&quot; title=&quot;查壳&quot;&gt;&lt;/a&gt;查壳&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/2021/11/18/160crackme04/1.PNG&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="逆向" scheme="http://example.com/categories/%E9%80%86%E5%90%91/"/>
+    
+    
+    <category term="crackme" scheme="http://example.com/tags/crackme/"/>
+    
+  </entry>
   
   <entry>
     <title>深育杯reverse</title>
@@ -446,27 +471,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;FlareOn5-Ultimate-Minesweeper&quot;&gt;&lt;a href=&quot;#FlareOn5-Ultimate-Minesweeper&quot; class=&quot;headerlink&quot; title=&quot;[FlareOn5]Ultimate</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>运行时压缩</title>
-    <link href="http://example.com/2021/08/09/%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8E%8B%E7%BC%A9/"/>
-    <id>http://example.com/2021/08/09/%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8E%8B%E7%BC%A9/</id>
-    <published>2021-08-09T08:20:19.000Z</published>
-    <updated>2021-08-09T08:30:13.504Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;一-数据压缩&quot;&gt;&lt;a href=&quot;#一-数据压缩&quot; class=&quot;headerlink&quot; title=&quot;一.数据压缩&quot;&gt;&lt;/a&gt;一.数据压缩&lt;/h1&gt;&lt;p&gt;对于数据压缩都比较熟悉，下面简单梳理一下相关知识。数据压缩(Data Compression</summary>
         
       
     
