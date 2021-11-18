@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-12T11:34:57.495Z</updated>
+  <updated>2021-11-18T06:44:23.657Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深育杯reverse</title>
+    <link href="http://example.com/2021/11/18/%E6%B7%B1%E8%82%B2%E6%9D%AFreverse/"/>
+    <id>http://example.com/2021/11/18/%E6%B7%B1%E8%82%B2%E6%9D%AFreverse/</id>
+    <published>2021-11-18T06:13:49.000Z</published>
+    <updated>2021-11-18T06:44:23.657Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Press&quot;&gt;&lt;a href=&quot;#Press&quot; class=&quot;headerlink&quot; title=&quot;Press&quot;&gt;&lt;/a&gt;&lt;strong&gt;Press&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="逆向" scheme="http://example.com/categories/%E9%80%86%E5%90%91/"/>
+    
+    
+    <category term="CTF" scheme="http://example.com/tags/CTF/"/>
+    
+  </entry>
   
   <entry>
     <title>160个crackme03</title>
@@ -442,27 +467,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;一-数据压缩&quot;&gt;&lt;a href=&quot;#一-数据压缩&quot; class=&quot;headerlink&quot; title=&quot;一.数据压缩&quot;&gt;&lt;/a&gt;一.数据压缩&lt;/h1&gt;&lt;p&gt;对于数据压缩都比较熟悉，下面简单梳理一下相关知识。数据压缩(Data Compression</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>BUUCTF--findKey</title>
-    <link href="http://example.com/2021/08/08/BUUCTF-findKey/"/>
-    <id>http://example.com/2021/08/08/BUUCTF-findKey/</id>
-    <published>2021-08-08T06:39:58.000Z</published>
-    <updated>2021-08-08T06:59:20.578Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;BUUCTF–findKey&quot;&gt;&lt;a href=&quot;#BUUCTF–findKey&quot; class=&quot;headerlink&quot;</summary>
         
       
     
