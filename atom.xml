@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-02-17T07:27:00.301Z</updated>
+  <updated>2023-03-07T14:08:24.444Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flask（Jinja2）服务端模板注入漏洞</title>
+    <link href="http://example.com/2023/03/06/Flask%EF%BC%88Jinja2%EF%BC%89%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://example.com/2023/03/06/Flask%EF%BC%88Jinja2%EF%BC%89%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/</id>
+    <published>2023-03-06T12:19:46.000Z</published>
+    <updated>2023-03-07T14:08:24.444Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Flask（Jinja2）服务端模板注入漏洞&quot;&gt;&lt;a href=&quot;#Flask（Jinja2）服务端模板注入漏洞&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="漏洞复现" scheme="http://example.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="Flask SSTI" scheme="http://example.com/tags/Flask-SSTI/"/>
+    
+  </entry>
   
   <entry>
     <title>frida</title>
@@ -477,31 +502,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>SCTF2019 Who is he</title>
-    <link href="http://example.com/2021/09/12/he/"/>
-    <id>http://example.com/2021/09/12/he/</id>
-    <published>2021-09-12T02:00:02.000Z</published>
-    <updated>2023-01-10T08:12:27.315Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;SCTF2019-Who-is-he&quot;&gt;&lt;a href=&quot;#SCTF2019-Who-is-he&quot; class=&quot;headerlink&quot; title=&quot;SCTF2019 Who is he&quot;&gt;&lt;/a&gt;SCTF2019 Who is</summary>
-        
-      
-    
-    
-    
-    <category term="逆向" scheme="http://example.com/categories/%E9%80%86%E5%90%91/"/>
-    
-    
-    <category term="CTF" scheme="http://example.com/tags/CTF/"/>
     
   </entry>
   
