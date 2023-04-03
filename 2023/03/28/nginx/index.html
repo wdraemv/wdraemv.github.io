@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>nginx | 风不及你甜</title><meta name="author" content="wdraemv"><meta name="copyright" content="wdraemv"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="CVE-2013-4547-nginx文件名逻辑漏洞漏洞原理这个漏洞其实和代码执行没有太大关系，其主要原因是错误地解析了请求的URI，错误地获取到用户请求的文件名，导致出现权限绕过、代码执行的连带影响。 我们请求1.gif[0x20][0x00].php，这个URI可以匹配上正则\.php$，可以进入这个Location块；但进入后，Nginx却错误地认为请求的文件是1.gif[0x20]，就设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx">
+<meta property="og:url" content="http://example.com/2023/03/28/nginx/index.html">
+<meta property="og:site_name" content="风不及你甜">
+<meta property="og:description" content="CVE-2013-4547-nginx文件名逻辑漏洞漏洞原理这个漏洞其实和代码执行没有太大关系，其主要原因是错误地解析了请求的URI，错误地获取到用户请求的文件名，导致出现权限绕过、代码执行的连带影响。 我们请求1.gif[0x20][0x00].php，这个URI可以匹配上正则\.php$，可以进入这个Location块；但进入后，Nginx却错误地认为请求的文件是1.gif[0x20]，就设置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wallhaven.cc/w/kx98xd">
+<meta property="article:published_time" content="2023-03-28T07:59:59.000Z">
+<meta property="article:modified_time" content="2023-03-28T09:40:37.940Z">
+<meta property="article:author" content="wdraemv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wallhaven.cc/w/kx98xd"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/03/28/nginx/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.3.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2023-03-28 17:40:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="风不及你甜" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">90</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">Tags</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">Categories</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-2013-4547-nginx%E6%96%87%E4%BB%B6%E5%90%8D%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">CVE-2013-4547-nginx文件名逻辑漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">漏洞复现过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-2017-7529-NGINX%E8%B6%8A%E7%95%8C%E8%AF%BB%E5%8F%96%E7%BC%93%E5%AD%98%E6%BC%8F%E6%B4%9E-nginx%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">CVE-2017-7529 NGINX越界读取缓存漏洞-nginx整数溢出漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">漏洞原理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-1"><span class="toc-number">2.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B-1"><span class="toc-number">2.3.</span> <span class="toc-text">漏洞复现过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E5%AF%BC%E8%87%B4%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.</span> <span class="toc-text">Nginx 配置错误导致漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2"><span class="toc-number">3.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRLF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.2.</span> <span class="toc-text">CRLF注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.</span> <span class="toc-text">目录穿越漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add-header%E8%A2%AB%E8%A6%86%E7%9B%96"><span class="toc-number">3.4.</span> <span class="toc-text">add_header被覆盖</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">文件解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-number">4.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-3"><span class="toc-number">4.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B-2"><span class="toc-number">4.3.</span> <span class="toc-text">漏洞复现过程</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wallhaven.cc/w/kx98xd)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">风不及你甜</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/-%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 清单|| fa fa-heartbeat</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">nginx</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-28T07:59:59.000Z" title="Created 2023-03-28 15:59:59">2023-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-03-28T09:40:37.940Z" title="Updated 2023-03-28 17:40:37">2023-03-28</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="CVE-2013-4547-nginx文件名逻辑漏洞"><a href="#CVE-2013-4547-nginx文件名逻辑漏洞" class="headerlink" title="CVE-2013-4547-nginx文件名逻辑漏洞"></a>CVE-2013-4547-nginx文件名逻辑漏洞</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>这个漏洞其实和代码执行没有太大关系，其主要原因是错误地解析了请求的URI，错误地获取到用户请求的文件名，导致出现权限绕过、代码执行的连带影响。</p>
+<p>我们请求<code>1.gif[0x20][0x00].php</code>，这个URI可以匹配上正则<code>\.php$</code>，可以进入这个Location块；但进入后，Nginx却错误地认为请求的文件是<code>1.gif[0x20]</code>，就设置其为<code>SCRIPT_FILENAME</code>的值发送给fastcgi。fastcgi根据<code>SCRIPT_FILENAME</code>的值进行解析，最后造成了解析漏洞。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>启动漏洞环境：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+<p>环境启动后，访问<code>http://your-ip:8080/</code>即可看到一个上传页面。</p>
+<p><img src="/2023/03/28/nginx/1.PNG" alt="1"></p>
+<h2 id="漏洞复现过程"><a href="#漏洞复现过程" class="headerlink" title="漏洞复现过程"></a><strong>漏洞复现过程</strong></h2><p>这个环境是黑名单验证，我们无法上传php后缀的文件,先创建一个test.png</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF98A</span><br><span class="line"><span class="meta">&lt;?php</span> phpinfo(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上传抓包修改，后缀加上一个空格</p>
+<p><img src="/2023/03/28/nginx/2.PNG" alt="2"></p>
+<p>上传成功，成功显示文件路径</p>
+<p><img src="/2023/03/28/nginx/3.PNG" alt="3"></p>
+<p>%00截断解析php文件，访问路径</p>
+<p><code>http://your-ip:8080/uploadfiles/test.pngaaaphp </code></p>
+<p>抓包修改hex，将61 61 61修改为20 00 2e,然后放包</p>
+<p><img src="/2023/03/28/nginx/4.PNG" alt="3"></p>
+<p>回显phpinfo</p>
+<p><img src="/2023/03/28/nginx/5.PNG" alt="3"></p>
+<h1 id="CVE-2017-7529-NGINX越界读取缓存漏洞-nginx整数溢出漏洞"><a href="#CVE-2017-7529-NGINX越界读取缓存漏洞-nginx整数溢出漏洞" class="headerlink" title="CVE-2017-7529 NGINX越界读取缓存漏洞-nginx整数溢出漏洞"></a>CVE-2017-7529 NGINX越界读取缓存漏洞-nginx整数溢出漏洞</h1><h2 id="漏洞原理："><a href="#漏洞原理：" class="headerlink" title="漏洞原理："></a><strong>漏洞原理：</strong></h2><p>在nginx作为反向代理服务器，且开启了缓存时，攻击者可以构造恶意的range域，来获取相应的服务器中的缓存文件头部信息，导致敏感的服务器信息泄露</p>
+<p>影响版本：0.5.6-1.13.2</p>
+<p>漏洞危害：敏感信息泄露</p>
+<p>在header中range的解析过程</p>
+<p><img src="https://image.3001.net/images/20220620/1655725531_62b05ddbd258b2e53eaa3.png!small" alt="image-20220615220120448"></p>
+<p>在<code>ngx_http_range_parse</code>函数中有这样一个循环， 这段代码是要把<code>“-”</code>两边的数字取出分别赋值给<code>start</code>和<code>end</code>变量，字符串指针<code>p</code>中即为<code>bytes=</code>后面的内容</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">//部分源码如下</span><br><span class="line">cutoff = NGX_MAX_OFF_T_VALUE / <span class="number">10</span>;</span><br><span class="line">cutlim = NGX_MAX_OFF_T_VALUE % <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(;;)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">start</span>=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">end</span>=<span class="number">0</span>;</span><br><span class="line">suffix=<span class="number">0</span>;</span><br><span class="line">//...</span><br><span class="line"><span class="keyword">while</span>(*p == <span class="string">&#x27; &#x27;</span>) &#123; p++; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (*p != <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (*p &lt; <span class="string">&#x27;0&#x27;</span> || *p &gt; <span class="string">&#x27;9&#x27;</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_RANGENOT_SATISFIABLE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (*p &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; *p &lt;= <span class="string">&#x27;9&#x27;</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">start</span> &gt;= cutoff &amp;&amp; (<span class="built_in">start</span> &gt; cutoff || *p - <span class="string">&#x27;0&#x27;</span> &gt; cutlim)) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_RANGENOT_SATISFIABLE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">start</span> = <span class="built_in">start</span> * <span class="number">10</span> + *p++ - <span class="string">&#x27;0&#x27;</span>;  // 更新<span class="built_in">start</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (*p == <span class="string">&#x27; &#x27;</span>) &#123; p++; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (*p++ != <span class="string">&#x27;-&#x27;</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_RANGENOT_SATISFIABLE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (*p == <span class="string">&#x27; &#x27;</span>) &#123; p++; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (*p == <span class="string">&#x27;,&#x27;</span>  || *p == <span class="string">&#x27;\0&#x27;</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">end</span> = content_length;  // 对<span class="keyword">end</span>做更新</span><br><span class="line">goto found;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">suffix = <span class="number">1</span>;</span><br><span class="line">p++;</span><br><span class="line">&#125;</span><br><span class="line">//...</span><br><span class="line"><span class="keyword">if</span> (suffix)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">start</span> = content_length - <span class="keyword">end</span>;   // 第一次byte以“<span class="literal">-end</span>”格式传入时，<span class="keyword">end</span>=<span class="number">0</span>，<span class="built_in">start</span> = content_length</span><br><span class="line"><span class="keyword">end</span> = content_length - <span class="number">1</span>;       // <span class="built_in">start</span> &gt; <span class="keyword">end</span> 不会进入found</span><br><span class="line">&#125;</span><br><span class="line">//...</span><br><span class="line">found:</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">start</span> &lt; <span class="keyword">end</span>) </span><br><span class="line">&#123;</span><br><span class="line">range = ngx_array_push(&amp;ctx-&gt;ranges);</span><br><span class="line"><span class="keyword">if</span> (range == NULL) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_ERROR;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range-&gt;<span class="built_in">start</span> = <span class="built_in">start</span>;</span><br><span class="line">range-&gt;<span class="keyword">end</span> = <span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line">size += <span class="keyword">end</span> - <span class="built_in">start</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (ranges-- == <span class="number">0</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_DECLINED;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (*p++ != <span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">//...</span><br><span class="line"><span class="keyword">if</span> (size &gt; content_length)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_DELINED;</span><br><span class="line">&#125;</span><br><span class="line">//...</span><br></pre></td></tr></table></figure>
+<p>在该段代码中存在<code>cutoff</code>和<code>cutlim</code>阈值限定了从字符串中读取时不会让<code>start</code>或<code>end</code>为负值， 所以这里需要进入<code>suffix = 1</code>的分支，因此使用<code>Range:bytes=-xxx</code>，（<code>-end</code>的格式）即省略初始<code>start</code>值的形式，由此可以绕过<code>*p != &#39;-&#39;</code>的限制，进入<code>suffix=1</code>的分支。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (suffix)</span><br><span class="line">&#123;</span><br><span class="line"><span class="attribute">start</span> = content_length - end<span class="comment">;</span></span><br><span class="line"><span class="attribute">end</span> = content_length - <span class="number">1</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>start</code>等于<code>content_length</code>减去<code>end</code>值，所以如果传入的<code>end</code>比实际长度还要长，就可以使<code>start</code>变为负数。其中<code>content_length</code>为不包含文件头的文件长度。最终<code>end</code>的值会被设定为<code>content_length - 1</code>（因此我们需要构造一个小包）</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">start</span> &lt; <span class="keyword">end</span>) </span><br><span class="line">&#123;</span><br><span class="line">range = ngx_array_push(&amp;ctx-&gt;ranges);</span><br><span class="line"><span class="keyword">if</span> (range == <span class="keyword">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_ERROR;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">range</span>-&gt;start = <span class="keyword">start</span>;</span><br><span class="line"><span class="keyword">range</span>-&gt;end = <span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line">size += <span class="keyword">end</span> - <span class="keyword">start</span>;</span><br><span class="line"><span class="keyword">if</span> (ranges<span class="comment">-- == 0) </span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_DECLINED;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>start</code>相当于分片区间的头指针，<code>end</code>相当于分片区间的尾指针。如果此时<code>end</code>值要比文件长度（<code>content_length</code>）数值大的话，就可以将<code>start</code>解析为负值。与<code>Range</code>相关的还有一个<code>size</code>值，它是每段<code>Range</code>相加后的总长度</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">size</span> &gt; content_length)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> NGX_DELINED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<code>size</code>（即所有<code>range</code>相加的总长度）超过文件长度<code>content_length</code>时，会返回默认的<code>NGX_DELINED</code>。</p>
+<p>注意到此处有一个退出条件：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (*p++ != <span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>支持支持<code>range</code>的值为<code>start1-end1,start2-end2……</code>的形式。</p>
+<p>因此，可以构造<code>range:bytes=-x,-y</code>。一大一小两个<code>end</code>值，只需要 控制前面一个<code>end</code>值小而后一个<code>end</code>值大，从而实现<code>start</code>值和<code>size</code>值皆为负数，控制<code>start</code>值负到一个合适的位置，那么就能成功读到缓存文件头部了。</p>
+<h2 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>启动漏洞环境：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+<p>访问<code>http://your-ip:8080/</code>，即可查看到Nginx默认页面，这个页面实际上是反向代理的8081端口的内容。</p>
+<p><img src="/2023/03/28/nginx/6.PNG" alt="3"></p>
+<h2 id="漏洞复现过程-1"><a href="#漏洞复现过程-1" class="headerlink" title="漏洞复现过程"></a><strong>漏洞复现过程</strong></h2><p>调用<code>python3 poc.py http://your-ip:8080/</code>，读取返回结果：</p>
+<p><img src="/2023/03/28/nginx/7.PNG" alt="3"></p>
+<h1 id="Nginx-配置错误导致漏洞"><a href="#Nginx-配置错误导致漏洞" class="headerlink" title="Nginx 配置错误导致漏洞"></a>Nginx 配置错误导致漏洞</h1><h2 id="环境搭建-2"><a href="#环境搭建-2" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>启动漏洞环境：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2023/03/28/nginx/8.PNG" alt="3"></p>
+<p>运行成功后，Nginx将会监听8080/8081/8082三个端口，分别对应三种漏洞。</p>
+<h2 id="CRLF注入漏洞"><a href="#CRLF注入漏洞" class="headerlink" title="CRLF注入漏洞"></a>CRLF注入漏洞</h2><h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a><strong>漏洞原理</strong></h3><p>CRLF是<code>“回车 +  换行”（\r\n）</code>的简称。在HTTP协议中，HTTP Header与HTTP  Body是用两个CRLF分隔的，浏览器就是根据这两个CRLF（使用<code>payload  %0a%0d%0a%0d</code>进行测试）来取出HTTP内容并显示出来。所以，一旦我们能够控制HTTP消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话Cookie<code>（[http://www.xx.com%0a%0d%0a%0dSet-cookie:JSPSESSID%3Dxxx）或者HTML代码（http://www.xx.com/?url=%0a%0d%0a%0d](https://www.freebuf.com/articles/web/265135.html?url=  )&lt;img src=1 onerror=alert(&quot;xss&quot;)&gt;）</code>，所以<code>CRLF Injection</code>又叫<code>HTTP Response Splitting</code>，简称HRS。</p>
+<p>Nginx会将<code>$uri</code>进行解码，导致传入%0a%0d即可引入换行符，造成CRLF注入漏洞。</p>
+<p>错误的配置文件示例（原本的目的是为了让http的请求跳转到https上）：</p>
+<p>Payload: <code>http://your-ip:8080/%0a%0dSet-Cookie:%20a=1</code></p>
+<p><img src="/2023/03/28/nginx/9.PNG" alt="3"></p>
+<p>也可以利用这个漏洞进行xss</p>
+<h2 id="目录穿越漏洞"><a href="#目录穿越漏洞" class="headerlink" title="目录穿越漏洞"></a>目录穿越漏洞</h2><p>Nginx在配置别名（Alias）的时候，如果忘记加<code>/</code>，将造成一个目录穿越漏洞。</p>
+<p>错误的配置文件示例（原本的目的是为了让用户访问到/home/目录下的文件）：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">location</span> <span class="title">/files</span> &#123;</span><br><span class="line">    alias /home/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Payload:<code>http://your-ip:8081/files../</code>，成功穿越到根目录：</p>
+<p><img src="/2023/03/28/nginx/10.PNG" alt="3"></p>
+<h2 id="add-header被覆盖"><a href="#add-header被覆盖" class="headerlink" title="add_header被覆盖"></a>add_header被覆盖</h2><p>Nginx配置文件子块（server、location、if）中的<code>add_header</code>，将会覆盖父块中的<code>add_header</code>添加的HTTP头，造成一些安全隐患。</p>
+<h1 id="文件解析漏洞"><a href="#文件解析漏洞" class="headerlink" title="文件解析漏洞"></a>文件解析漏洞</h1><h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a><strong>漏洞描述</strong></h2><p>该漏洞与nginx、php版本无关，属于用户配置不当造成的解析漏洞。由于nginx.conf的如下配置导致nginx把以’.php’结尾的文件交给fastcgi处理,对于任意文件名，在后面添加/xxx.php（xxx）为任意字符后，即可将文件作为php解析。</p>
+<h2 id="环境搭建-3"><a href="#环境搭建-3" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>启动漏洞环境：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+<p>环境启动后，访问<code>http://your-ip/</code>即可看到一个上传页面。</p>
+<h2 id="漏洞复现过程-2"><a href="#漏洞复现过程-2" class="headerlink" title="漏洞复现过程"></a><strong>漏洞复现过程</strong></h2><p>上传一个test.png</p>
+<p><img src="/2023/03/28/nginx/12.PNG" alt="3"></p>
+<p><img src="/2023/03/28/nginx/11.PNG" alt="3"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">wdraemv</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/03/28/nginx/">http://example.com/2023/03/28/nginx/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://wallhaven.cc/w/kx98xd" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/15/laravel/"><img class="next-cover" src="/2023/03/15/laravel/zygeko.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Laravel Debug mode RCE（CVE-2021-3129）</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By wdraemv</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
