@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-03T06:08:38.270Z</updated>
+  <updated>2023-04-16T07:21:28.858Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Weblogic漏洞复现（1）</title>
+    <link href="http://example.com/2023/04/12/Weblogic/"/>
+    <id>http://example.com/2023/04/12/Weblogic/</id>
+    <published>2023-04-12T06:54:09.000Z</published>
+    <updated>2023-04-16T07:21:28.858Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Weblogic-XMLDecoder-反序列化漏洞-CVE-2017-10271&quot;&gt;&lt;a href=&quot;#Weblogic-XMLDecoder-反序列化漏洞-CVE-2017-10271&quot; class=&quot;headerlink&quot; title=&quot;Weblogic</summary>
+        
+      
+    
+    
+    
+    <category term="漏洞复现" scheme="http://example.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="Weblogic" scheme="http://example.com/tags/Weblogic/"/>
+    
+  </entry>
+  
+  <entry>
     <title>tomcat</title>
     <link href="http://example.com/2023/04/03/tomcat/"/>
     <id>http://example.com/2023/04/03/tomcat/</id>
     <published>2023-04-03T05:59:03.000Z</published>
-    <updated>2023-04-03T06:08:38.270Z</updated>
+    <updated>2023-04-03T07:21:58.285Z</updated>
     
     
       
@@ -34,15 +59,19 @@
     
     
     
+    <category term="漏洞复现" scheme="http://example.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="Tomcat" scheme="http://example.com/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
-    <title>nginx</title>
+    <title>nginx漏洞复现</title>
     <link href="http://example.com/2023/03/28/nginx/"/>
     <id>http://example.com/2023/03/28/nginx/</id>
     <published>2023-03-28T07:59:59.000Z</published>
-    <updated>2023-03-28T09:40:37.940Z</updated>
+    <updated>2023-04-03T07:22:18.367Z</updated>
     
     
       
@@ -55,6 +84,10 @@
     
     
     
+    <category term="漏洞复现" scheme="http://example.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="Nginx" scheme="http://example.com/tags/Nginx/"/>
     
   </entry>
   
@@ -484,31 +517,6 @@
     
     
     <category term="base图片" scheme="http://example.com/tags/base%E5%9B%BE%E7%89%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>DASCTF2021年9月re</title>
-    <link href="http://example.com/2021/10/04/DASCTF20219/"/>
-    <id>http://example.com/2021/10/04/DASCTF20219/</id>
-    <published>2021-10-04T07:08:55.000Z</published>
-    <updated>2021-10-21T11:59:53.410Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;ea5ycpp&quot;&gt;&lt;a href=&quot;#ea5ycpp&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="CTF" scheme="http://example.com/categories/CTF/"/>
-    
-    
-    <category term="brainfuck" scheme="http://example.com/tags/brainfuck/"/>
     
   </entry>
   
