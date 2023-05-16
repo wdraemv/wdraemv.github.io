@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-16T07:21:28.858Z</updated>
+  <updated>2023-05-16T06:51:21.373Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Struct2漏洞复现汇总</title>
+    <link href="http://example.com/2023/05/16/structs/"/>
+    <id>http://example.com/2023/05/16/structs/</id>
+    <published>2023-05-16T06:17:17.000Z</published>
+    <updated>2023-05-16T06:51:21.373Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;什么是struts&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Struts2就是一个框架，它是属于web层的一个框架，是Struts1的一个升级版，但是它和Struts1来相比，提供了太多的增强和改进，怎么运行的呢，就是实现了Servlet的功能，来进</summary>
+        
+      
+    
+    
+    
+    <category term="漏洞复现" scheme="http://example.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="Struct2" scheme="http://example.com/tags/Struct2/"/>
+    
+  </entry>
   
   <entry>
     <title>Weblogic漏洞复现（1）</title>
@@ -492,31 +518,6 @@
     
     
     <category term="鲲鹏杯" scheme="http://example.com/tags/%E9%B2%B2%E9%B9%8F%E6%9D%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>base64转图片</title>
-    <link href="http://example.com/2021/10/04/base64%E8%BD%AC%E5%9B%BE%E7%89%87/"/>
-    <id>http://example.com/2021/10/04/base64%E8%BD%AC%E5%9B%BE%E7%89%87/</id>
-    <published>2021-10-04T12:51:40.000Z</published>
-    <updated>2021-10-21T12:00:34.382Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;BSidesSF2019-blink&quot;&gt;&lt;a href=&quot;#BSidesSF2019-blink&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="CTF" scheme="http://example.com/categories/CTF/"/>
-    
-    
-    <category term="base图片" scheme="http://example.com/tags/base%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
